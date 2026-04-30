@@ -1249,7 +1249,7 @@ footer {
         <h3>¡Solicitud enviada!</h3>
         <p>Tu proyecto fue enviado por WhatsApp.<br>Nuestro equipo te contactará muy pronto.</p>
       </div>
-      <div class="wiz-nav" id="wiz-final-nav">
+      <div class="wiz-nav" id="wiz-final-nav" style="display:none;">
         <button class="wbtn-back" onclick="goStep(4)">← Atrás</button>
         <button class="wbtn-send" onclick="enviar()">Enviar por WhatsApp →</button>
       </div>
@@ -1380,6 +1380,9 @@ function goStep(n) {
     const ws=document.getElementById('ws'+i);
     ws.classList.toggle('active',i===n);
   }
+  // Mostrar botón enviar solo en paso 5
+  const finalNav = document.getElementById('wiz-final-nav');
+  if(finalNav) finalNav.style.display = n===5 ? 'flex' : 'none';
   document.getElementById('wizard').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
