@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crea Tu Página Web</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F8F8F8;
+    --bg-alt: #F0F0F0;
+    --fg: #0A0A0A;
+    --fg-mid: #1C1C1C;
+    --accent: #0A0A0A;
+    --muted: #767676;
+    --muted-light: #A8A8A8;
+    --border: rgba(0,0,0,0.08);
+    --border-strong: rgba(0,0,0,0.16);
+    --card-bg: #FFFFFF;
+    --highlight: #0A0A0A;
+    --highlight-dark: #000000;
+    --shadow-subtle: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.05);
+    --shadow-lift: 0 8px 30px rgba(0,0,0,0.09), 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(248,248,248,0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  nav .logo span { color: var(--muted); font-weight: 400; }
+  nav a {
+    color: var(--fg);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border: 1px solid var(--border-strong);
+    border-radius: 100px;
+    transition: all 0.3s;
+    font-weight: 400;
+  }
+  nav a:hover {
+    background: var(--fg);
+    color: #FFFFFF;
+    border-color: var(--fg);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center;
+    padding: 120px 40px 80px;
+    position: relative;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; top: 50%; left: 50%;
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(0,0,0,0.02) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 30px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 7vw, 6rem);
+    font-weight: 400;
+    line-height: 1.1;
+    max-width: 900px;
+    margin-bottom: 30px;
+    letter-spacing: -2px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--muted);
+  }
+  .hero p {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 500px;
+    margin-bottom: 50px;
+  }
+  .hero .scroll-indicator {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: float 3s ease-in-out infinite;
+  }
+  .hero .scroll-indicator .line {
+    width: 1px; height: 50px;
+    background: rgba(0,0,0,0.15);
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+  }
+
+  /* SECTIONS */
+  section { padding: 100px 40px; }
+  section.dark { background: #0A0A0A; color: #F8F8F8; }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 15px;
+  }
+  section.dark .section-label { color: #666; }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 400;
+    letter-spacing: -1px;
+    margin-bottom: 60px;
+    max-width: 700px;
+  }
+
+  /* SHOWCASE GRID */
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .showcase-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(.22,1,.36,1), box-shadow 0.4s;
+    background: var(--card-bg);
+    box-shadow: var(--shadow-subtle);
+  }
+  .showcase-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lift);
+    border-color: var(--border-strong);
+  }
+  .card-preview {
+    height: 220px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-info {
+    padding: 25px;
+  }
+  .card-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 8px;
+  }
+  .card-info p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* MINI PREVIEWS */
+  .preview-landing {
+    background: #0A0A0A;
+    height: 100%; display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    color: white; padding: 30px;
+  }
+  .preview-landing .p-nav { display: flex; gap: 15px; position: absolute; top: 15px; right: 15px; }
+  .preview-landing .p-nav span { width: 30px; height: 2px; background: rgba(255,255,255,0.25); border-radius: 2px; }
+  .preview-landing h4 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #FFFFFF; }
+  .preview-landing .p-btn { margin-top: 12px; padding: 6px 20px; border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; font-size: 0.65rem; letter-spacing: 1px; color: rgba(255,255,255,0.7); }
+
+  .preview-ecommerce {
+    background: #F4F4F4;
+    height: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px;
+  }
+  .preview-ecommerce .p-product {
+    background: white; border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.06);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; padding: 10px;
+  }
+  .preview-ecommerce .p-product .swatch {
+    width: 50px; height: 50px; border-radius: 8px; margin-bottom: 8px;
+  }
+  .preview-ecommerce .p-product span { font-size: 0.6rem; color: var(--muted); }
+  .preview-ecommerce .p-product strong { font-size: 0.7rem; color: #0A0A0A; }
+
+  .preview-portfolio {
+    background: #EBEBEB;
+    height: 100%; padding: 20px; display: flex; flex-direction: column; gap: 8px;
+  }
+  .preview-portfolio .p-row {
+    display: flex; gap: 8px; flex: 1;
+  }
+  .preview-portfolio .p-block {
+    flex: 1; border-radius: 8px;
+  }
+
+  .preview-blog {
+    background: white;
+    height: 100%; padding: 20px; display: flex; flex-direction: column; gap: 12px;
+  }
+  .preview-blog .p-line { height: 8px; background: #EEEEEE; border-radius: 4px; }
+  .preview-blog .p-line.short { width: 60%; }
+  .preview-blog .p-line.medium { width: 80%; }
+  .preview-blog .p-title { height: 14px; background: #0A0A0A; border-radius: 4px; width: 70%; margin-bottom: 5px; }
+  .preview-blog .p-img { height: 60px; background: #E8E8E8; border-radius: 8px; }
+
+  .preview-restaurant {
+    background: #111111;
+    height: 100%; display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    color: #F0F0F0; padding: 20px; text-align: center;
+  }
+  .preview-restaurant .p-icon { font-size: 1.6rem; margin-bottom: 10px; opacity: 0.8; }
+  .preview-restaurant h4 { font-family: 'Playfair Display', serif; font-size: 1.2rem; letter-spacing: 2px; color: #FFFFFF; }
+  .preview-restaurant .p-divider { width: 40px; height: 1px; background: rgba(255,255,255,0.2); margin: 10px 0; }
+  .preview-restaurant span { font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+
+  .preview-services {
+    background: #F0F0F0;
+    height: 100%; padding: 20px; color: #0A0A0A;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .preview-services .p-stat {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .preview-services .p-bar-bg { flex: 1; height: 5px; background: rgba(0,0,0,0.08); border-radius: 3px; overflow: hidden; }
+  .preview-services .p-bar { height: 100%; border-radius: 3px; background: #0A0A0A; }
+  .preview-services span { font-size: 0.6rem; color: #767676; min-width: 50px; }
+
+  /* FEATURES */
+  .features-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .feature {
+    padding: 30px 0;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .feature .number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: rgba(255,255,255,0.15);
+    margin-bottom: 15px;
+  }
+  .feature h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: #FFFFFF;
+  }
+  .feature p {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.7;
+  }
+
+  /* FORM SECTION */
+  .form-section {
+    padding: 100px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .form-section .section-title {
+    text-align: center;
+    margin: 0 auto 20px;
+  }
+  .form-subtitle {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 60px;
+    max-width: 500px;
+    margin-left: auto; margin-right: auto;
+  }
+
+  .form-group {
+    margin-bottom: 35px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 16px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--card-bg);
+    color: var(--fg);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    outline: none;
+    box-shadow: var(--shadow-subtle);
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: rgba(0,0,0,0.35);
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.06), var(--shadow-subtle);
+  }
+  .form-group textarea { min-height: 120px; resize: vertical; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  /* RADIO/CHECK OPTIONS */
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+  }
+  .option-card {
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.25s cubic-bezier(.22,1,.36,1);
+    background: var(--card-bg);
+    user-select: none;
+    box-shadow: var(--shadow-subtle);
+  }
+  .option-card:hover { border-color: var(--border-strong); transform: translateY(-1px); box-shadow: var(--shadow-lift); }
+  .option-card.selected {
+    border-color: var(--fg);
+    background: var(--fg);
+    color: #FFFFFF;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+  .option-card .option-icon { font-size: 1.5rem; margin-bottom: 8px; }
+  .option-card .option-label { font-size: 0.85rem; font-weight: 500; }
+
+  .option-card input { display: none; }
+
+  /* COLOR PICKER */
+  .color-options {
+    display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+  }
+  .color-swatch {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: all 0.3s;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .color-swatch:hover { transform: scale(1.15); }
+  .color-swatch.selected {
+    border-color: var(--fg);
+    transform: scale(1.15);
+    box-shadow: 0 0 0 2px white, 0 0 0 4px var(--fg);
+  }
+  .color-swatch.selected::after {
+    content: '✓';
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 0.8rem; font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  }
+  .color-custom {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 2px dashed var(--border);
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+  .color-custom input {
+    position: absolute; inset: -10px;
+    width: 64px; height: 64px;
+    cursor: pointer;
+    border: none; padding: 0;
+  }
+
+  /* FILE UPLOAD */
+  .upload-area {
+    border: 1.5px dashed var(--border-strong);
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    background: var(--card-bg);
+  }
+  .upload-area:hover { border-color: var(--fg); background: rgba(0,0,0,0.01); }
+  .upload-area .upload-icon { font-size: 2rem; margin-bottom: 10px; }
+  .upload-area p { font-size: 0.85rem; color: var(--muted); }
+  .upload-area small { font-size: 0.7rem; color: #bbb; }
+  .upload-area input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .upload-preview {
+    margin-top: 15px;
+    font-size: 0.8rem;
+    color: var(--fg);
+    font-weight: 500;
+  }
+
+  /* SUBMIT */
+  .submit-btn {
+    display: block;
+    width: 100%;
+    padding: 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 14px;
+    background: var(--fg);
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(.22,1,.36,1);
+    margin-top: 50px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+  .submit-btn:hover {
+    background: #000000;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.22);
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 50px 40px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  /* ANIMATIONS */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s, transform 0.8s;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 15px 20px; }
+    section, .form-section { padding: 60px 20px; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero h1 { letter-spacing: -1px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Studio<span>Web</span></div>
+  <a href="#solicitar">Solicitar</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Diseño web profesional</div>
+  <h1>Tu idea, <em>nuestra</em> ejecución</h1>
+  <p>Diseñamos páginas web a tu medida. Explora los estilos y cuéntanos qué necesitas.</p>
+  <div class="scroll-indicator">
+    <span>Explorar</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<!-- SHOWCASE -->
+<section>
+  <div class="reveal">
+    <div class="section-label">01 — Estilos</div>
+    <div class="section-title">Diferentes tipos de páginas web</div>
+  </div>
+  <div class="showcase-grid">
+
+    <div class="showcase-card reveal">
+      <div class="card-preview">
+        <div class="preview-landing">
+          <div class="p-nav"><span></span><span></span><span></span></div>
+          <h4>Landing Page</h4>
+          <div class="p-btn">Descubrir</div>
+        </div>
+      </div>
+      <div class="card-info">
+        <h3>Landing Page</h3>
+        <p>Una sola página impactante para presentar tu producto, servicio o marca con un llamado a la acción claro.</p>
+      </div>
+    </div>
+
+    <div class="showcase-card reveal">
+      <div class="card-preview">
+        <div class="preview-ecommerce">
+          <div class="p-product"><div class="swatch" style="background:#E8D5C4;"></div><span>Producto</span><strong>$49.00</strong></div>
+          <div class="p-product"><div class="swatch" style="background:#C4D4E8;"></div><span>Producto</span><strong>$35.00</strong></div>
+          <div class="p-product"><div class="swatch" style="background:#D4E8C4;"></div><span>Producto</span><strong>$62.00</strong></div>
+          <div class="p-product"><div class="swatch" style="background:#E8C4D4;"></div><span>Producto</span><strong>$28.00</strong></div>
+        </div>
+      </div>
+      <div class="card-info">
+        <h3>Tienda Online</h3>
+        <p>E-commerce completo con catálogo de productos, carrito de compras y pasarela de pagos.</p>
+      </div>
+    </div>
+
+    <div class="showcase-card reveal">
+      <div class="card-preview">
+        <div class="preview-portfolio">
+          <div class="p-row">
+            <div class="p-block" style="background:#D8D8D8;"></div>
+            <div class="p-block" style="background:#E8E8E8;"></div>
+          </div>
+          <div class="p-row">
+            <div class="p-block" style="background:#C0C0C0; flex:2;"></div>
+            <div class="p-block" style="background:#DEDEDE;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card-info">
+        <h3>Portafolio</h3>
+        <p>Muestra tu trabajo con galerías elegantes, perfecta para fotógrafos, diseñadores y creativos.</p>
+      </div>
+    </div>
+
+    <div class="showcase-card reveal">
+      <div class="card-preview">
+        <div class="preview-blog">
+          <div class="p-title"></div>
+          <div class="p-img"></div>
+          <div class="p-line"></div>
+          <div class="p-line medium"></div>
+          <div class="p-line short"></div>
+          <div class="p-line"></div>
+        </div>
+      </div>
+      <div class="card-info">
+        <h3>Blog / Noticias</h3>
+        <p>Publica artículos, noticias y contenido para posicionar tu marca y conectar con tu audiencia.</p>
+      </div>
+    </div>
+
+    <div class="showcase-card reveal">
+      <div class="card-preview">
+        <div class="preview-restaurant">
+          <div class="p-icon">✦</div>
+          <h4>RESTAURANTE</h4>
+          <div class="p-divider"></div>
+          <span>Menú &nbsp;·&nbsp; Reservas &nbsp;·&nbsp; Ubicación</span>
+        </div>
+      </div>
+      <div class="card-info">
+        <h3>Restaurante / Negocio Local</h3>
+        <p>Menú digital, reservas online, horarios y ubicación para negocios físicos.</p>
+      </div>
+    </div>
+
+    <div class="showcase-card reveal">
+      <div class="card-preview">
+        <div class="preview-services">
+          <div style="font-size:0.7rem; font-weight:500; margin-bottom:5px; color:#0A0A0A;">Métricas</div>
+          <div class="p-stat"><span>SEO</span><div class="p-bar-bg"><div class="p-bar" style="width:85%;"></div></div></div>
+          <div class="p-stat"><span>Velocidad</span><div class="p-bar-bg"><div class="p-bar" style="width:92%;"></div></div></div>
+          <div class="p-stat"><span>UX</span><div class="p-bar-bg"><div class="p-bar" style="width:78%;"></div></div></div>
+          <div class="p-stat"><span>Diseño</span><div class="p-bar-bg"><div class="p-bar" style="width:95%;"></div></div></div>
+          <div class="p-stat"><span>Mobile</span><div class="p-bar-bg"><div class="p-bar" style="width:88%;"></div></div></div>
+        </div>
+      </div>
+      <div class="card-info">
+        <h3>Servicios Profesionales</h3>
+        <p>Web corporativa con secciones de servicios, equipo, testimonios y formulario de contacto.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="dark">
+  <div class="reveal">
+    <div class="section-label">02 — Proceso</div>
+    <div class="section-title">Cómo trabajamos</div>
+  </div>
+  <div class="features-row reveal">
+    <div class="feature">
+      <div class="number">01</div>
+      <h3>Cuéntanos tu idea</h3>
+      <p>Llena el formulario con los detalles de tu proyecto. Mientras más información nos des, mejor será el resultado.</p>
+    </div>
+    <div class="feature">
+      <div class="number">02</div>
+      <h3>Diseño personalizado</h3>
+      <p>Creamos una propuesta visual basada en tu marca, colores y estilo. Tú apruebas antes de avanzar.</p>
+    </div>
+    <div class="feature">
+      <div class="number">03</div>
+      <h3>Desarrollo y entrega</h3>
+      <p>Programamos tu sitio web funcional, responsive y optimizado. Lo publicamos y te damos control total.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FORM -->
+<section class="form-section" id="solicitar">
+  <div class="reveal">
+    <div class="section-label" style="text-align:center;">03 — Tu proyecto</div>
+    <div class="section-title">Cuéntanos sobre tu página web ideal</div>
+    <p class="form-subtitle">Completa los datos y te contactaremos por WhatsApp con una propuesta personalizada.</p>
+  </div>
+
+  <form id="webForm" class="reveal">
+
+    <!-- Datos personales -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nombre completo</label>
+        <input type="text" id="nombre" placeholder="Tu nombre" required>
+      </div>
+      <div class="form-group">
+        <label>Nombre de tu marca</label>
+        <input type="text" id="marca" placeholder="Nombre de tu negocio" required>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="tu@email.com">
+      </div>
+      <div class="form-group">
+        <label>WhatsApp / Teléfono</label>
+        <input type="tel" id="telefono" placeholder="+57 300 000 0000">
+      </div>
+    </div>
+
+    <!-- Tipo de página -->
+    <div class="form-group">
+      <label>¿Qué tipo de página necesitas?</label>
+      <div class="options-grid" id="tipoPagina">
+        <div class="option-card" data-value="Landing Page" onclick="selectOption(this, 'tipoPagina')">
+          <div class="option-icon">🚀</div>
+          <div class="option-label">Landing Page</div>
+        </div>
+        <div class="option-card" data-value="Tienda Online" onclick="selectOption(this, 'tipoPagina')">
+          <div class="option-icon">🛒</div>
+          <div class="option-label">Tienda Online</div>
+        </div>
+        <div class="option-card" data-value="Portafolio" onclick="selectOption(this, 'tipoPagina')">
+          <div class="option-icon">🎨</div>
+          <div class="option-label">Portafolio</div>
+        </div>
+        <div class="option-card" data-value="Blog" onclick="selectOption(this, 'tipoPagina')">
+          <div class="option-icon">📝</div>
+          <div class="option-label">Blog</div>
+        </div>
+        <div class="option-card" data-value="Restaurante / Local" onclick="selectOption(this, 'tipoPagina')">
+          <div class="option-icon">🍽️</div>
+          <div class="option-label">Restaurante</div>
+        </div>
+        <div class="option-card" data-value="Servicios Profesionales" onclick="selectOption(this, 'tipoPagina')">
+          <div class="option-icon">💼</div>
+          <div class="option-label">Servicios</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colores -->
+    <div class="form-group">
+      <label>¿Qué colores quieres para tu web?</label>
+      <div class="color-options" id="coloresWeb">
+        <div class="color-swatch" style="background:#1A1A1A;" data-color="Negro" onclick="toggleColor(this)"></div>
+        <div class="color-swatch" style="background:#2563EB;" data-color="Azul" onclick="toggleColor(this)"></div>
+        <div class="color-swatch" style="background:#DC2626;" data-color="Rojo" onclick="toggleColor(this)"></div>
+        <div class="color-swatch" style="background:#16A34A;" data-color="Verde" onclick="toggleColor(this)"></div>
+        <div class="color-swatch" style="background:#9333EA;" data-color="Morado" onclick="toggleColor(this)"></div>
+        <div class="color-swatch" style="background:#EA580C;" data-color="Naranja" onclick="toggleColor(this)"></div>
+        <div class="color-swatch" style="background:#DB2777;" data-color="Rosa" onclick="toggleColor(this)"></div>
+        <div class="color-swatch" style="background:#D4A574;" data-color="Dorado" onclick="toggleColor(this)"></div>
+        <div class="color-custom" title="Color personalizado">
+          <input type="color" id="colorCustom" value="#C8FF00" onchange="customColorSelected(this)">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>¿Prefieres usar los colores de tu logo?</label>
+      <div class="options-grid" id="usarColoresLogo">
+        <div class="option-card" data-value="Sí, usar colores de mi logo" onclick="selectOption(this, 'usarColoresLogo')">
+          <div class="option-label">Sí, los de mi logo</div>
+        </div>
+        <div class="option-card" data-value="No, quiero colores nuevos" onclick="selectOption(this, 'usarColoresLogo')">
+          <div class="option-label">No, colores nuevos</div>
+        </div>
+        <div class="option-card" data-value="No tengo logo aún" onclick="selectOption(this, 'usarColoresLogo')">
+          <div class="option-label">No tengo logo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Logo -->
+    <div class="form-group">
+      <label>Sube tu logo (si tienes)</label>
+      <div class="upload-area" id="logoUpload">
+        <div class="upload-icon">☁️</div>
+        <p>Haz clic o arrastra tu logo aquí</p>
+        <small>PNG, JPG o SVG — máx. 5MB</small>
+        <input type="file" id="logoFile" accept="image/*" onchange="handleUpload(this, 'logoPreview')">
+        <div class="upload-preview" id="logoPreview"></div>
+      </div>
+    </div>
+
+    <!-- Catálogo -->
+    <div class="form-group">
+      <label>Sube tu catálogo o lista de productos (si aplica)</label>
+      <div class="upload-area" id="catalogoUpload">
+        <div class="upload-icon">📄</div>
+        <p>PDF, Excel o imágenes de tu catálogo</p>
+        <small>PDF, XLSX, JPG, PNG — máx. 10MB</small>
+        <input type="file" id="catalogoFile" accept=".pdf,.xlsx,.xls,.jpg,.jpeg,.png" multiple onchange="handleUpload(this, 'catalogoPreview')">
+        <div class="upload-preview" id="catalogoPreview"></div>
+      </div>
+    </div>
+
+    <!-- Secciones -->
+    <div class="form-group">
+      <label>¿Qué secciones necesitas? (selecciona varias)</label>
+      <div class="options-grid" id="secciones">
+        <div class="option-card multi" data-value="Inicio" onclick="toggleMulti(this)">
+          <div class="option-label">Inicio</div>
+        </div>
+        <div class="option-card multi" data-value="Nosotros" onclick="toggleMulti(this)">
+          <div class="option-label">Nosotros</div>
+        </div>
+        <div class="option-card multi" data-value="Servicios" onclick="toggleMulti(this)">
+          <div class="option-label">Servicios</div>
+        </div>
+        <div class="option-card multi" data-value="Productos" onclick="toggleMulti(this)">
+          <div class="option-label">Productos</div>
+        </div>
+        <div class="option-card multi" data-value="Galería" onclick="toggleMulti(this)">
+          <div class="option-label">Galería</div>
+        </div>
+        <div class="option-card multi" data-value="Testimonios" onclick="toggleMulti(this)">
+          <div class="option-label">Testimonios</div>
+        </div>
+        <div class="option-card multi" data-value="Blog" onclick="toggleMulti(this)">
+          <div class="option-label">Blog</div>
+        </div>
+        <div class="option-card multi" data-value="Contacto" onclick="toggleMulti(this)">
+          <div class="option-label">Contacto</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estilo -->
+    <div class="form-group">
+      <label>¿Qué estilo visual prefieres?</label>
+      <div class="options-grid" id="estiloVisual">
+        <div class="option-card" data-value="Minimalista" onclick="selectOption(this, 'estiloVisual')">
+          <div class="option-icon">◻️</div>
+          <div class="option-label">Minimalista</div>
+        </div>
+        <div class="option-card" data-value="Moderno y colorido" onclick="selectOption(this, 'estiloVisual')">
+          <div class="option-icon">🌈</div>
+          <div class="option-label">Moderno</div>
+        </div>
+        <div class="option-card" data-value="Elegante y lujoso" onclick="selectOption(this, 'estiloVisual')">
+          <div class="option-icon">✨</div>
+          <div class="option-label">Elegante</div>
+        </div>
+        <div class="option-card" data-value="Divertido y juvenil" onclick="selectOption(this, 'estiloVisual')">
+          <div class="option-icon">🎉</div>
+          <div class="option-label">Divertido</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Descripción -->
+    <div class="form-group">
+      <label>Describe tu negocio y qué quieres lograr con tu web</label>
+      <textarea id="descripcion" placeholder="Cuéntanos sobre tu negocio, qué vendes o haces, a quién te diriges y cualquier detalle que nos ayude a crear la página perfecta para ti..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>¿Tienes alguna referencia o web que te guste?</label>
+      <input type="text" id="referencia" placeholder="Pega un link de alguna web que te inspire (opcional)">
+    </div>
+
+    <button type="submit" class="submit-btn">Enviar solicitud por WhatsApp →</button>
+  </form>
+</section>
+
+<footer>
+  <p>StudioWeb — Diseño web profesional a tu medida</p>
+</footer>
+
+<script>
+  // Selections state
+  const state = {
+    tipoPagina: '',
+    colores: [],
+    customColor: '',
+    usarColoresLogo: '',
+    secciones: [],
+    estiloVisual: '',
+  };
+
+  // Single select
+  function selectOption(el, group) {
+    document.querySelectorAll(`#${group} .option-card`).forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    state[group] = el.dataset.value;
+  }
+
+  // Multi select
+  function toggleMulti(el) {
+    el.classList.toggle('selected');
+    const val = el.dataset.value;
+    if (el.classList.contains('selected')) {
+      state.secciones.push(val);
+    } else {
+      state.secciones = state.secciones.filter(s => s !== val);
+    }
+  }
+
+  // Color toggles
+  function toggleColor(el) {
+    el.classList.toggle('selected');
+    const color = el.dataset.color;
+    if (el.classList.contains('selected')) {
+      state.colores.push(color);
+    } else {
+      state.colores = state.colores.filter(c => c !== color);
+    }
+  }
+
+  function customColorSelected(input) {
+    state.customColor = input.value;
+  }
+
+  // File upload
+  function handleUpload(input, previewId) {
+    const preview = document.getElementById(previewId);
+    if (input.files.length > 0) {
+      const names = Array.from(input.files).map(f => f.name).join(', ');
+      preview.textContent = '✓ ' + names;
+    }
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Form submit -> WhatsApp
+  document.getElementById('webForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const nombre = document.getElementById('nombre').value;
+    const marca = document.getElementById('marca').value;
+    const email = document.getElementById('email').value;
+    const telefono = document.getElementById('telefono').value;
+    const descripcion = document.getElementById('descripcion').value;
+    const referencia = document.getElementById('referencia').value;
+
+    const coloresText = state.colores.length > 0 ? state.colores.join(', ') : 'No seleccionados';
+    const coloresExtra = state.customColor ? ` + personalizado: ${state.customColor}` : '';
+    const seccionesText = state.secciones.length > 0 ? state.secciones.join(', ') : 'No seleccionadas';
+
+    const logoFile = document.getElementById('logoFile');
+    const logoText = logoFile.files.length > 0 ? `Sí (${logoFile.files[0].name})` : 'No adjuntó';
+    const catalogoFile = document.getElementById('catalogoFile');
+    const catalogoText = catalogoFile.files.length > 0 
+      ? `Sí (${Array.from(catalogoFile.files
