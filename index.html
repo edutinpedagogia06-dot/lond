@@ -1422,6 +1422,38 @@ _Enviado desde LOND Studio_`;
   window.open('https://wa.me/573106459761?text='+encodeURIComponent(msg),'_blank');
   document.getElementById('success-msg').classList.add('show');
   document.getElementById('wiz-final-nav').style.display='none';
+
+  // Reiniciar después de 4 segundos
+  setTimeout(() => {
+    // Reset estado
+    S = { tipo:'', paleta:'', logo:'', nombre:'', sector:'', desc:'', extras:[], contacto:'', notas:'', logoFile:null, logoFileName:null, logoColors:null };
+
+    // Reset formularios
+    ['f-nombre','f-sector','f-desc','f-contacto','f-notas'].forEach(id => {
+      const el = document.getElementById(id);
+      if(el) el.value = '';
+    });
+
+    // Reset selecciones visuales
+    document.querySelectorAll('.tipo-card, .pal-card, .extra-btn, [onclick^="selLogo"]').forEach(el => el.classList.remove('sel'));
+
+    // Reset logo upload
+    const img = document.getElementById('logo-preview-img');
+    const placeholder = document.getElementById('logo-placeholder');
+    if(img){ img.src=''; img.style.display='none'; }
+    if(placeholder) placeholder.style.display='flex';
+    const status = document.getElementById('logo-upload-status');
+    if(status) status.textContent='';
+    const fileInput = document.getElementById('logo-file-input');
+    if(fileInput) fileInput.value='';
+
+    // Reset success y nav
+    document.getElementById('success-msg').classList.remove('show');
+    document.getElementById('wiz-final-nav').style.display='flex';
+
+    // Volver al paso 1
+    goStep(1);
+  }, 4000);
 }
 </script>
 </body>
