@@ -3,933 +3,1246 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crea Tu Página Web</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<title>WebCraft Studio — Diseño Web Profesional</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;700;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #F8F8F8;
-    --bg-alt: #F0F0F0;
-    --fg: #0A0A0A;
-    --fg-mid: #1C1C1C;
-    --accent: #0A0A0A;
-    --muted: #767676;
-    --muted-light: #A8A8A8;
-    --border: rgba(0,0,0,0.08);
-    --border-strong: rgba(0,0,0,0.16);
-    --card-bg: #FFFFFF;
-    --highlight: #0A0A0A;
-    --highlight-dark: #000000;
-    --shadow-subtle: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.05);
-    --shadow-lift: 0 8px 30px rgba(0,0,0,0.09), 0 2px 8px rgba(0,0,0,0.05);
-  }
+:root {
+  --gold: #c9a96e;
+  --gold-light: #e8d5a8;
+  --gold-dark: #8b6f3d;
+  --dark: #0d0d0d;
+  --dark2: #141414;
+  --dark3: #1c1c1c;
+  --dark4: #242424;
+  --text: #f0ece4;
+  --text-muted: #888;
+  --text-dim: #555;
+  --border: rgba(201,169,110,0.15);
+}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin:0; padding:0; box-sizing:border-box; }
 
-  html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--fg);
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--dark);
+  color: var(--text);
+  overflow-x: hidden;
+  cursor: none;
+}
 
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 20px 40px;
-    display: flex; justify-content: space-between; align-items: center;
-    background: rgba(248,248,248,0.9);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-  }
-  nav .logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-  }
-  nav .logo span { color: var(--muted); font-weight: 400; }
-  nav a {
-    color: var(--fg);
-    text-decoration: none;
-    font-size: 0.85rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    padding: 8px 20px;
-    border: 1px solid var(--border-strong);
-    border-radius: 100px;
-    transition: all 0.3s;
-    font-weight: 400;
-  }
-  nav a:hover {
-    background: var(--fg);
-    color: #FFFFFF;
-    border-color: var(--fg);
-  }
+/* CURSOR */
+.cursor {
+  position: fixed;
+  width: 10px; height: 10px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s;
+  transform: translate(-50%,-50%);
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(201,169,110,0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.15s, width 0.3s, height 0.3s, opacity 0.3s;
+  transform: translate(-50%,-50%);
+}
+.cursor-ring.expand { width:60px; height:60px; opacity:0.4; }
 
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex; flex-direction: column;
-    justify-content: center; align-items: center;
-    text-align: center;
-    padding: 120px 40px 80px;
-    position: relative;
-  }
-  .hero::after {
-    content: '';
-    position: absolute; top: 50%; left: 50%;
-    width: 600px; height: 400px;
-    background: radial-gradient(ellipse, rgba(0,0,0,0.02) 0%, transparent 70%);
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-  }
-  .hero-tag {
-    font-size: 0.75rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 30px;
-  }
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.8rem, 7vw, 6rem);
-    font-weight: 400;
-    line-height: 1.1;
-    max-width: 900px;
-    margin-bottom: 30px;
-    letter-spacing: -2px;
-  }
-  .hero h1 em {
-    font-style: italic;
-    color: var(--muted);
-  }
-  .hero p {
-    font-size: 1.1rem;
-    color: var(--muted);
-    max-width: 500px;
-    margin-bottom: 50px;
-  }
-  .hero .scroll-indicator {
-    display: flex; flex-direction: column; align-items: center;
-    gap: 8px;
-    color: var(--muted);
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    animation: float 3s ease-in-out infinite;
-  }
-  .hero .scroll-indicator .line {
-    width: 1px; height: 50px;
-    background: rgba(0,0,0,0.15);
-  }
+/* SCROLLBAR */
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-track { background: var(--dark); }
+::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius:2px; }
 
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(10px); }
-  }
+/* NAV */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  display: flex; align-items:center; justify-content:space-between;
+  padding: 1.4rem 3rem;
+  background: rgba(13,13,13,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  transition: padding 0.3s;
+}
+nav.scrolled { padding: 0.9rem 3rem; }
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+.nav-logo span { color: var(--gold); }
+.nav-links { display:flex; gap:2rem; align-items:center; }
+.nav-links a {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-cta {
+  background: var(--gold) !important;
+  color: var(--dark) !important;
+  padding: 0.55rem 1.4rem !important;
+  border-radius: 2px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase;
+  font-size: 0.75rem !important;
+  transition: background 0.2s !important;
+}
+.nav-cta:hover { background: var(--gold-light) !important; }
 
-  /* SECTIONS */
-  section { padding: 100px 40px; }
-  section.dark { background: #0A0A0A; color: #F8F8F8; }
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction:column; justify-content:center; align-items:center;
+  text-align:center;
+  padding: 6rem 2rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg {
+  position:absolute; inset:0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,169,110,0.07) 0%, transparent 70%),
+              radial-gradient(ellipse 40% 40% at 80% 80%, rgba(201,169,110,0.04) 0%, transparent 60%);
+}
+.hero-grid {
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(201,169,110,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,169,110,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-tag {
+  display: inline-flex; align-items:center; gap:0.5rem;
+  border: 1px solid var(--border);
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  animation: fadeUp 0.8s ease both;
+}
+.hero-tag::before {
+  content:'';
+  width:6px; height:6px;
+  background: var(--gold);
+  border-radius:50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
 
-  .section-label {
-    font-size: 0.7rem;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 15px;
-  }
-  section.dark .section-label { color: #666; }
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.8s 0.1s ease both;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+.hero p {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  max-width: 520px;
+  line-height: 1.7;
+  margin-bottom: 3rem;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+.hero-btns {
+  display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+.btn-primary {
+  background: var(--gold);
+  color: var(--dark);
+  padding: 0.9rem 2.2rem;
+  border-radius: 2px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all 0.25s;
+  display: inline-flex; align-items:center; gap:0.5rem;
+}
+.btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+.btn-outline {
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.9rem 2.2rem;
+  border-radius: 2px;
+  font-size: 0.85rem;
+  font-weight: 400;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all 0.25s;
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
 
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 4vw, 3.2rem);
-    font-weight: 400;
-    letter-spacing: -1px;
-    margin-bottom: 60px;
-    max-width: 700px;
-  }
+.hero-scroll {
+  position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:0.5rem;
+  animation: fadeUp 1s 0.6s ease both;
+}
+.hero-scroll span { font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-dim); }
+.scroll-line {
+  width:1px; height:40px;
+  background: linear-gradient(var(--gold), transparent);
+  animation: scrollAnim 1.5s ease infinite;
+}
+@keyframes scrollAnim { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} 51%{transform:scaleY(1);transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
 
-  /* SHOWCASE GRID */
-  .showcase-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .showcase-card {
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-    transition: transform 0.4s cubic-bezier(.22,1,.36,1), box-shadow 0.4s;
-    background: var(--card-bg);
-    box-shadow: var(--shadow-subtle);
-  }
-  .showcase-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-lift);
-    border-color: var(--border-strong);
-  }
-  .card-preview {
-    height: 220px;
-    position: relative;
-    overflow: hidden;
-  }
-  .card-info {
-    padding: 25px;
-  }
-  .card-info h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    font-weight: 400;
-    margin-bottom: 8px;
-  }
-  .card-info p {
-    font-size: 0.85rem;
-    color: var(--muted);
-    line-height: 1.5;
-  }
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
 
-  /* MINI PREVIEWS */
-  .preview-landing {
-    background: #0A0A0A;
-    height: 100%; display: flex; flex-direction: column;
-    justify-content: center; align-items: center;
-    color: white; padding: 30px;
-  }
-  .preview-landing .p-nav { display: flex; gap: 15px; position: absolute; top: 15px; right: 15px; }
-  .preview-landing .p-nav span { width: 30px; height: 2px; background: rgba(255,255,255,0.25); border-radius: 2px; }
-  .preview-landing h4 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #FFFFFF; }
-  .preview-landing .p-btn { margin-top: 12px; padding: 6px 20px; border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; font-size: 0.65rem; letter-spacing: 1px; color: rgba(255,255,255,0.7); }
+/* STATS */
+.stats {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--dark2);
+}
+.stat {
+  padding: 2.5rem 2rem;
+  text-align:center;
+  border-right: 1px solid var(--border);
+  position:relative; overflow:hidden;
+  transition: background 0.3s;
+}
+.stat:last-child { border-right:none; }
+.stat:hover { background: rgba(201,169,110,0.04); }
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.stat-label { font-size:0.78rem; color:var(--text-muted); letter-spacing:0.06em; text-transform:uppercase; }
 
-  .preview-ecommerce {
-    background: #F4F4F4;
-    height: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px;
-  }
-  .preview-ecommerce .p-product {
-    background: white; border-radius: 10px;
-    border: 1px solid rgba(0,0,0,0.06);
-    display: flex; flex-direction: column; align-items: center;
-    justify-content: center; padding: 10px;
-  }
-  .preview-ecommerce .p-product .swatch {
-    width: 50px; height: 50px; border-radius: 8px; margin-bottom: 8px;
-  }
-  .preview-ecommerce .p-product span { font-size: 0.6rem; color: var(--muted); }
-  .preview-ecommerce .p-product strong { font-size: 0.7rem; color: #0A0A0A; }
+/* SECTION BASE */
+section { padding: 6rem 3rem; }
+.section-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+  display:flex; align-items:center; gap:0.75rem;
+}
+.section-label::before { content:''; flex:0 0 30px; height:1px; background:var(--gold); }
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+.section-title em { font-style:italic; color:var(--gold); }
+.section-sub { font-size:0.95rem; color:var(--text-muted); max-width:520px; line-height:1.7; }
 
-  .preview-portfolio {
-    background: #EBEBEB;
-    height: 100%; padding: 20px; display: flex; flex-direction: column; gap: 8px;
-  }
-  .preview-portfolio .p-row {
-    display: flex; gap: 8px; flex: 1;
-  }
-  .preview-portfolio .p-block {
-    flex: 1; border-radius: 8px;
-  }
+/* PORTFOLIO SECTION */
+.portfolio { background: var(--dark); }
+.portfolio-header { text-align:center; max-width:680px; margin:0 auto 4rem; }
+.portfolio-header .section-label { justify-content:center; }
+.portfolio-header .section-label::before { display:none; }
 
-  .preview-blog {
-    background: white;
-    height: 100%; padding: 20px; display: flex; flex-direction: column; gap: 12px;
-  }
-  .preview-blog .p-line { height: 8px; background: #EEEEEE; border-radius: 4px; }
-  .preview-blog .p-line.short { width: 60%; }
-  .preview-blog .p-line.medium { width: 80%; }
-  .preview-blog .p-title { height: 14px; background: #0A0A0A; border-radius: 4px; width: 70%; margin-bottom: 5px; }
-  .preview-blog .p-img { height: 60px; background: #E8E8E8; border-radius: 8px; }
+.portfolio-tabs {
+  display:flex; gap:0.5rem; justify-content:center; flex-wrap:wrap; margin-bottom:3rem;
+}
+.ptab {
+  padding: 0.5rem 1.4rem;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.04em;
+  background: transparent;
+  font-family: 'Outfit', sans-serif;
+}
+.ptab:hover { border-color: var(--gold); color: var(--gold); }
+.ptab.active { background: var(--gold); color: var(--dark); border-color: var(--gold); font-weight:600; }
 
-  .preview-restaurant {
-    background: #111111;
-    height: 100%; display: flex; flex-direction: column;
-    justify-content: center; align-items: center;
-    color: #F0F0F0; padding: 20px; text-align: center;
-  }
-  .preview-restaurant .p-icon { font-size: 1.6rem; margin-bottom: 10px; opacity: 0.8; }
-  .preview-restaurant h4 { font-family: 'Playfair Display', serif; font-size: 1.2rem; letter-spacing: 2px; color: #FFFFFF; }
-  .preview-restaurant .p-divider { width: 40px; height: 1px; background: rgba(255,255,255,0.2); margin: 10px 0; }
-  .preview-restaurant span { font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.port-item {
+  position:relative; overflow:hidden; aspect-ratio:4/3;
+  background: var(--dark3);
+  cursor: pointer;
+  display: none;
+}
+.port-item.show { display:block; }
+.port-item.featured { grid-column:span 2; aspect-ratio:unset; }
+.port-preview {
+  width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+  transition: transform 0.5s ease;
+  position:relative;
+}
+.port-item:hover .port-preview { transform:scale(1.04); }
+.port-overlay {
+  position:absolute; inset:0;
+  background: rgba(13,13,13,0.85);
+  display:flex; flex-direction:column; justify-content:flex-end; padding:1.5rem;
+  opacity:0; transition:opacity 0.3s;
+}
+.port-item:hover .port-overlay { opacity:1; }
+.port-tag {
+  font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:0.3rem;
+}
+.port-name { font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:400; color:var(--text); }
+.port-sub { font-size:0.78rem; color:var(--text-muted); margin-top:0.2rem; }
+.port-arrow {
+  position:absolute; top:1rem; right:1rem;
+  width:32px; height:32px; border:1px solid rgba(201,169,110,0.4);
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  color:var(--gold); font-size:0.9rem;
+}
 
-  .preview-services {
-    background: #F0F0F0;
-    height: 100%; padding: 20px; color: #0A0A0A;
-    display: flex; flex-direction: column; gap: 10px;
-  }
-  .preview-services .p-stat {
-    display: flex; align-items: center; gap: 10px;
-  }
-  .preview-services .p-bar-bg { flex: 1; height: 5px; background: rgba(0,0,0,0.08); border-radius: 3px; overflow: hidden; }
-  .preview-services .p-bar { height: 100%; border-radius: 3px; background: #0A0A0A; }
-  .preview-services span { font-size: 0.6rem; color: #767676; min-width: 50px; }
+/* MOCK WEBSITE PREVIEWS */
+.mock-tienda {
+  width:100%; height:200px;
+  background: #f8f6f0;
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.mock-tienda .mbar { height:28px; background:#1a1a2e; display:flex; align-items:center; padding:0 10px; gap:6px; }
+.mock-tienda .mbar span { width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.3); }
+.mock-tienda .mbody { flex:1; padding:8px; display:grid; grid-template-columns:repeat(3,1fr); gap:5px; }
+.mock-tienda .mcard { background:#e8e4da; border-radius:3px; position:relative; overflow:hidden; }
+.mock-tienda .mcard::after { content:''; position:absolute; bottom:6px; left:6px; right:6px; height:4px; background:#c9a96e; border-radius:1px; opacity:0.6; }
 
-  /* FEATURES */
-  .features-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .feature {
-    padding: 30px 0;
-    border-top: 1px solid rgba(255,255,255,0.07);
-  }
-  .feature .number {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    color: rgba(255,255,255,0.15);
-    margin-bottom: 15px;
-  }
-  .feature h3 {
-    font-size: 1.1rem;
-    font-weight: 500;
-    margin-bottom: 10px;
-    color: #FFFFFF;
-  }
-  .feature p {
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.45);
-    line-height: 1.7;
-  }
+.mock-corp {
+  width:100%; height:200px;
+  background: #090912;
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.mock-corp .mbar { height:24px; background:rgba(255,255,255,0.05); display:flex; align-items:center; padding:0 10px; gap:20px; }
+.mock-corp .mbar span { font-size:6px; color:rgba(201,169,110,0.7); letter-spacing:1px; font-family:serif; }
+.mock-corp .mhero { height:80px; background:linear-gradient(135deg,rgba(201,169,110,0.08),transparent); display:flex; align-items:center; padding:0 16px; }
+.mock-corp .mhero-text { }
+.mock-corp .mhero-text h4 { font-size:10px; color:#fff; font-family:serif; font-weight:300; margin-bottom:4px; }
+.mock-corp .mhero-text div { width:30px; height:2px; background:#c9a96e; }
+.mock-corp .mcards { display:grid; grid-template-columns:repeat(3,1fr); gap:4px; padding:8px; }
+.mock-corp .mcard2 { height:44px; background:rgba(255,255,255,0.04); border-radius:2px; border-top:2px solid rgba(201,169,110,0.3); }
 
-  /* FORM SECTION */
-  .form-section {
-    padding: 100px 40px;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  .form-section .section-title {
-    text-align: center;
-    margin: 0 auto 20px;
-  }
-  .form-subtitle {
-    text-align: center;
-    color: var(--muted);
-    font-size: 0.95rem;
-    margin-bottom: 60px;
-    max-width: 500px;
-    margin-left: auto; margin-right: auto;
-  }
+.mock-rest {
+  width:100%; height:200px;
+  background: #120b04;
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.mock-rest .mbar { height:24px; background:rgba(255,255,255,0.04); display:flex; align-items:center; justify-content:center; }
+.mock-rest .mbar span { font-size:7px; color:#c9a96e; letter-spacing:3px; font-family:serif; }
+.mock-rest .mfull { flex:1; background:linear-gradient(rgba(12,7,2,0.3),rgba(12,7,2,0.7)), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%23201408'/%3E%3Crect x='0' y='0' width='2' height='2' fill='%23241a0c' opacity='0.5'/%3E%3C/svg%3E"); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; }
+.mock-rest .mfull h4 { font-size:11px; color:#fff; font-family:serif; font-weight:300; letter-spacing:2px; }
+.mock-rest .mfull div { width:30px; height:1px; background:#c9a96e; }
+.mock-rest .mfull button { background:#c9a96e; color:#120b04; font-size:6px; padding:4px 10px; border:none; letter-spacing:1px; }
 
-  .form-group {
-    margin-bottom: 35px;
-  }
-  .form-group label {
-    display: block;
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 10px;
-  }
-  .form-group input,
-  .form-group textarea,
-  .form-group select {
-    width: 100%;
-    padding: 16px 20px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1rem;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: var(--card-bg);
-    color: var(--fg);
-    transition: border-color 0.3s, box-shadow 0.3s;
-    outline: none;
-    box-shadow: var(--shadow-subtle);
-  }
-  .form-group input:focus,
-  .form-group textarea:focus,
-  .form-group select:focus {
-    border-color: rgba(0,0,0,0.35);
-    box-shadow: 0 0 0 3px rgba(0,0,0,0.06), var(--shadow-subtle);
-  }
-  .form-group textarea { min-height: 120px; resize: vertical; }
+.mock-port {
+  width:100%; height:200px;
+  background: #f2ede6;
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.mock-port .mbar { height:24px; background:#f2ede6; border-bottom:1px solid #e0d8cc; display:flex; align-items:center; padding:0 10px; justify-content:space-between; }
+.mock-port .mbar span { font-size:7px; color:#888; letter-spacing:1px; font-family:serif; }
+.mock-port .mgrid { flex:1; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:3px; padding:6px; }
+.mock-port .mi { border-radius:2px; }
+.mock-port .mi:nth-child(1) { background:#c9a96e; opacity:0.6; grid-row:span 2; }
+.mock-port .mi:nth-child(2) { background:#d5cfc5; }
+.mock-port .mi:nth-child(3) { background:#1a1a2e; opacity:0.7; }
 
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
+.mock-land {
+  width:100%; height:200px;
+  background: #0a0f1e;
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.mock-land .mbar { height:24px; background:rgba(255,255,255,0.04); display:flex; align-items:center; padding:0 10px; gap:10px; }
+.mock-land .mbar span { font-size:6px; color:rgba(255,255,255,0.4); letter-spacing:1px; }
+.mock-land .mhero2 { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; background:radial-gradient(ellipse at center,rgba(100,120,255,0.1),transparent); }
+.mock-land .mhero2 h4 { font-size:10px; color:#fff; font-weight:300; letter-spacing:1px; font-family:serif; }
+.mock-land .mhero2 .mbtn { background:linear-gradient(135deg,#5566ff,#8855ff); color:#fff; font-size:6px; padding:4px 12px; border-radius:10px; }
+.mock-land .mfeats { display:flex; gap:4px; padding:6px; }
+.mock-land .mfeats div { flex:1; height:24px; background:rgba(255,255,255,0.05); border-radius:2px; }
 
-  /* RADIO/CHECK OPTIONS */
-  .options-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 12px;
-  }
-  .option-card {
-    padding: 18px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.25s cubic-bezier(.22,1,.36,1);
-    background: var(--card-bg);
-    user-select: none;
-    box-shadow: var(--shadow-subtle);
-  }
-  .option-card:hover { border-color: var(--border-strong); transform: translateY(-1px); box-shadow: var(--shadow-lift); }
-  .option-card.selected {
-    border-color: var(--fg);
-    background: var(--fg);
-    color: #FFFFFF;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-  }
-  .option-card .option-icon { font-size: 1.5rem; margin-bottom: 8px; }
-  .option-card .option-label { font-size: 0.85rem; font-weight: 500; }
+.mock-serv {
+  width:100%; height:200px;
+  background: #f5f8ff;
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.mock-serv .mbar { height:24px; background:#1a2e5e; display:flex; align-items:center; padding:0 10px; gap:10px; }
+.mock-serv .mbar span { font-size:6px; color:rgba(255,255,255,0.7); letter-spacing:1px; }
+.mock-serv .mbody2 { flex:1; padding:8px; }
+.mock-serv .mbody2 .mhero3 { height:50px; background:linear-gradient(135deg,#1a2e5e,#2d4a8e); border-radius:3px; margin-bottom:6px; display:flex; align-items:center; padding:0 10px; }
+.mock-serv .mbody2 .mhero3 span { font-size:8px; color:#fff; font-family:serif; font-weight:300; }
+.mock-serv .mservs { display:grid; grid-template-columns:repeat(3,1fr); gap:4px; }
+.mock-serv .mservs div { height:44px; background:#e8f0ff; border-radius:3px; border-top:2px solid #4a6ecc; }
 
-  .option-card input { display: none; }
+/* PROCESS SECTION */
+.process { background: var(--dark2); }
+.process-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:center; }
+.process-steps { display:flex; flex-direction:column; gap:0; }
+.process-step {
+  display:flex; gap:1.5rem; padding:1.8rem 0;
+  border-bottom:1px solid var(--border);
+  transition: all 0.3s;
+  cursor:default;
+}
+.process-step:first-child { border-top:1px solid var(--border); }
+.process-step:hover { padding-left:0.5rem; }
+.step-num {
+  font-family:'Playfair Display',serif;
+  font-size:2.5rem; font-weight:700;
+  color:rgba(201,169,110,0.15);
+  line-height:1; flex-shrink:0; width:50px;
+  transition:color 0.3s;
+}
+.process-step:hover .step-num { color:var(--gold); }
+.step-content h3 { font-size:1rem; font-weight:500; color:var(--text); margin-bottom:0.4rem; }
+.step-content p { font-size:0.83rem; color:var(--text-muted); line-height:1.6; }
 
-  /* COLOR PICKER */
-  .color-options {
-    display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
-  }
-  .color-swatch {
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 3px solid transparent;
-    transition: all 0.3s;
-    position: relative;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  .color-swatch:hover { transform: scale(1.15); }
-  .color-swatch.selected {
-    border-color: var(--fg);
-    transform: scale(1.15);
-    box-shadow: 0 0 0 2px white, 0 0 0 4px var(--fg);
-  }
-  .color-swatch.selected::after {
-    content: '✓';
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    color: white; font-size: 0.8rem; font-weight: 700;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-  }
-  .color-custom {
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    border: 2px dashed var(--border);
-    overflow: hidden;
-    position: relative;
-    cursor: pointer;
-  }
-  .color-custom input {
-    position: absolute; inset: -10px;
-    width: 64px; height: 64px;
-    cursor: pointer;
-    border: none; padding: 0;
-  }
+/* WIZARD SECTION */
+.wizard-section { background: var(--dark); }
+.wizard-inner { max-width:1000px; margin:0 auto; }
+.wizard-header { text-align:center; max-width:600px; margin:0 auto 4rem; }
+.wizard-header .section-label { justify-content:center; }
+.wizard-header .section-label::before { display:none; }
 
-  /* FILE UPLOAD */
-  .upload-area {
-    border: 1.5px dashed var(--border-strong);
-    border-radius: 16px;
-    padding: 40px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s;
-    position: relative;
-    background: var(--card-bg);
-  }
-  .upload-area:hover { border-color: var(--fg); background: rgba(0,0,0,0.01); }
-  .upload-area .upload-icon { font-size: 2rem; margin-bottom: 10px; }
-  .upload-area p { font-size: 0.85rem; color: var(--muted); }
-  .upload-area small { font-size: 0.7rem; color: #bbb; }
-  .upload-area input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-  .upload-preview {
-    margin-top: 15px;
-    font-size: 0.8rem;
-    color: var(--fg);
-    font-weight: 500;
-  }
+.wizard-steps {
+  display:flex; align-items:center; justify-content:center; gap:0; margin-bottom:3.5rem;
+}
+.wstep {
+  display:flex; align-items:center; gap:0.6rem;
+  padding:0.6rem 1.2rem;
+  font-size:0.78rem; font-weight:400; color:var(--text-dim);
+  letter-spacing:0.04em; text-transform:uppercase;
+  border:1px solid transparent;
+  cursor:pointer; transition:all 0.25s; position:relative;
+}
+.wstep.active {
+  color:var(--gold);
+  border-color:var(--border);
+  background:rgba(201,169,110,0.05);
+}
+.wstep-num {
+  width:22px; height:22px; border-radius:50%;
+  border:1px solid currentColor;
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.7rem; flex-shrink:0;
+}
+.wstep-sep { width:40px; height:1px; background:var(--border); flex-shrink:0; }
 
-  /* SUBMIT */
-  .submit-btn {
-    display: block;
-    width: 100%;
-    padding: 20px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    border: none;
-    border-radius: 14px;
-    background: var(--fg);
-    color: #FFFFFF;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(.22,1,.36,1);
-    margin-top: 50px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-  }
-  .submit-btn:hover {
-    background: #000000;
-    transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(0,0,0,0.22);
-  }
+.wizard-panel { display:none; }
+.wizard-panel.active { display:block; animation:fadeUp 0.4s ease both; }
 
-  /* FOOTER */
-  footer {
-    text-align: center;
-    padding: 50px 40px;
-    border-top: 1px solid var(--border);
-    color: var(--muted);
-    font-size: 0.8rem;
-  }
+/* TIPO CARDS */
+.tipo-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:2rem; }
+.tipo-card {
+  border:1px solid var(--border); border-radius:4px; overflow:hidden;
+  cursor:pointer; transition:all 0.3s; background:var(--dark2);
+}
+.tipo-card:hover { border-color:rgba(201,169,110,0.4); transform:translateY(-3px); }
+.tipo-card.sel { border-color:var(--gold); box-shadow:0 0 0 1px var(--gold); }
+.tipo-preview { height:140px; overflow:hidden; position:relative; }
+.tipo-info { padding:1rem; }
+.tipo-info h3 { font-size:0.88rem; font-weight:500; color:var(--text); margin-bottom:0.2rem; }
+.tipo-info p { font-size:0.75rem; color:var(--text-muted); }
 
-  /* ANIMATIONS */
-  .reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s, transform 0.8s;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* PALETA CARDS */
+.pal-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0.75rem; margin-bottom:2rem; }
+.pal-card {
+  border:1px solid var(--border); border-radius:4px; overflow:hidden;
+  cursor:pointer; transition:all 0.3s; background:var(--dark2);
+}
+.pal-card:hover { border-color:rgba(201,169,110,0.4); }
+.pal-card.sel { border-color:var(--gold); box-shadow:0 0 0 1px var(--gold); }
+.pal-swatches { display:flex; height:44px; }
+.pal-swatches span { flex:1; }
+.pal-name { padding:0.5rem 0.6rem; font-size:0.72rem; color:var(--text-muted); }
 
-  /* RESPONSIVE */
-  @media (max-width: 768px) {
-    nav { padding: 15px 20px; }
-    section, .form-section { padding: 60px 20px; }
-    .form-row { grid-template-columns: 1fr; }
-    .hero h1 { letter-spacing: -1px; }
-  }
+/* EXTRAS */
+.extras-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0.75rem; margin-bottom:2rem; }
+.extra-btn {
+  border:1px solid var(--border); border-radius:4px; padding:0.85rem 0.5rem;
+  text-align:center; cursor:pointer; transition:all 0.2s; background:var(--dark2);
+}
+.extra-btn:hover { border-color:rgba(201,169,110,0.35); }
+.extra-btn.sel { border-color:var(--gold); background:rgba(201,169,110,0.06); }
+.extra-btn .eicon { font-size:1.3rem; margin-bottom:0.35rem; }
+.extra-btn span { display:block; font-size:0.72rem; color:var(--text-muted); line-height:1.3; }
+
+/* FORM */
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem; }
+.fgroup { margin-bottom:1rem; }
+.fgroup label { display:block; font-size:0.72rem; font-weight:500; color:var(--text-muted); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.5rem; }
+.fgroup input, .fgroup textarea, .fgroup select {
+  width:100%; padding:0.8rem 1rem;
+  background:var(--dark3); border:1px solid var(--border);
+  border-radius:3px; color:var(--text); font-family:'Outfit',sans-serif; font-size:0.9rem;
+  outline:none; transition:border 0.2s;
+}
+.fgroup input:focus, .fgroup textarea:focus { border-color:var(--gold); }
+.fgroup textarea { resize:vertical; min-height:100px; }
+
+/* SUMMARY */
+.summary-card {
+  background:var(--dark2); border:1px solid var(--border); border-radius:4px;
+  padding:2rem; margin-bottom:2rem;
+}
+.sum-row {
+  display:flex; justify-content:space-between; align-items:flex-start;
+  padding:0.7rem 0; border-bottom:1px solid rgba(201,169,110,0.08);
+}
+.sum-row:last-child { border-bottom:none; }
+.sum-lbl { font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; min-width:160px; }
+.sum-val { font-size:0.88rem; color:var(--text); font-weight:400; text-align:right; }
+
+/* WIZARD NAV */
+.wiz-nav { display:flex; gap:1rem; margin-top:2rem; }
+.wbtn-back {
+  padding:0.8rem 2rem; border:1px solid var(--border); border-radius:2px;
+  background:transparent; color:var(--text-muted); font-family:'Outfit',sans-serif;
+  font-size:0.82rem; cursor:pointer; transition:all 0.2s; letter-spacing:0.04em;
+  text-transform:uppercase;
+}
+.wbtn-back:hover { border-color:var(--text-muted); color:var(--text); }
+.wbtn-next {
+  flex:1; padding:0.8rem 2rem; border:none; border-radius:2px;
+  background:var(--dark3); color:var(--gold); font-family:'Outfit',sans-serif;
+  font-size:0.82rem; cursor:pointer; transition:all 0.2s; letter-spacing:0.06em;
+  text-transform:uppercase; font-weight:500;
+  border:1px solid var(--border);
+}
+.wbtn-next:hover { background:rgba(201,169,110,0.1); border-color:var(--gold); }
+.wbtn-send {
+  flex:1; padding:0.8rem 2rem; border:none; border-radius:2px;
+  background:var(--gold); color:var(--dark); font-family:'Outfit',sans-serif;
+  font-size:0.85rem; cursor:pointer; transition:all 0.2s; letter-spacing:0.06em;
+  text-transform:uppercase; font-weight:600;
+}
+.wbtn-send:hover { background:var(--gold-light); }
+
+/* TESTIMONIALS */
+.testi { background:var(--dark3); }
+.testi-inner { max-width:1000px; margin:0 auto; }
+.testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5px; background:var(--border); margin-top:3.5rem; }
+.testi-card {
+  background:var(--dark3); padding:2rem;
+  transition:background 0.3s;
+}
+.testi-card:hover { background:var(--dark4); }
+.testi-stars { display:flex; gap:3px; margin-bottom:1rem; }
+.testi-stars span { color:var(--gold); font-size:0.8rem; }
+.testi-text { font-size:0.88rem; color:var(--text-muted); line-height:1.7; margin-bottom:1.5rem; font-style:italic; }
+.testi-author { display:flex; align-items:center; gap:0.75rem; }
+.testi-avatar { width:36px; height:36px; border-radius:50%; background:var(--gold-dark); display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:600; color:var(--dark); }
+.testi-name { font-size:0.82rem; font-weight:500; color:var(--text); }
+.testi-role { font-size:0.72rem; color:var(--text-dim); }
+
+/* CTA SECTION */
+.cta-section {
+  padding: 7rem 3rem;
+  text-align:center;
+  background:var(--dark2);
+  position:relative; overflow:hidden;
+}
+.cta-bg {
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse 60% 80% at 50% 50%, rgba(201,169,110,0.06),transparent);
+}
+.cta-section h2 {
+  font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3.5rem);
+  font-weight:300; color:var(--text); margin-bottom:1rem; position:relative;
+}
+.cta-section h2 em { font-style:italic; color:var(--gold); }
+.cta-section p { color:var(--text-muted); font-size:1rem; margin-bottom:2.5rem; position:relative; }
+.cta-btn {
+  display:inline-flex; align-items:center; gap:0.6rem;
+  background:var(--gold); color:var(--dark); padding:1rem 2.8rem;
+  border-radius:2px; font-size:0.9rem; font-weight:600; text-decoration:none;
+  letter-spacing:0.06em; text-transform:uppercase; transition:all 0.25s;
+  position:relative;
+}
+.cta-btn:hover { background:var(--gold-light); transform:translateY(-2px); }
+
+/* FOOTER */
+footer {
+  background:var(--dark);
+  border-top:1px solid var(--border);
+  padding:3rem;
+  display:flex; justify-content:space-between; align-items:center;
+  flex-wrap:wrap; gap:1rem;
+}
+.footer-logo { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--text); }
+.footer-logo span { color:var(--gold); }
+.footer-copy { font-size:0.75rem; color:var(--text-dim); }
+.footer-links { display:flex; gap:1.5rem; }
+.footer-links a { font-size:0.75rem; color:var(--text-dim); text-decoration:none; transition:color 0.2s; }
+.footer-links a:hover { color:var(--gold); }
+
+/* SUCCESS */
+.success-msg { display:none; text-align:center; padding:3rem 0; }
+.success-msg.show { display:block; animation:fadeUp 0.5s ease both; }
+.success-icon { width:72px;height:72px;border-radius:50%;background:var(--gold);margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:center; }
+.success-msg h3 { font-family:'Playfair Display',serif;font-size:2rem;font-weight:300;color:var(--text);margin-bottom:0.5rem; }
+.success-msg p { color:var(--text-muted);font-size:0.9rem;line-height:1.6; }
+
+/* WHATSAPP FLOAT */
+.wa-float {
+  position:fixed; bottom:2rem; right:2rem; z-index:200;
+  width:56px; height:56px; border-radius:50%;
+  background:#25d366; color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  text-decoration:none; font-size:1.5rem;
+  box-shadow:0 4px 20px rgba(37,211,102,0.4);
+  transition:transform 0.2s;
+}
+.wa-float:hover { transform:scale(1.1); }
+
+@media (max-width:900px) {
+  nav { padding:1rem 1.5rem; }
+  section { padding:4rem 1.5rem; }
+  .stats { grid-template-columns:repeat(2,1fr); }
+  .portfolio-grid { grid-template-columns:repeat(2,1fr); }
+  .port-item.featured { grid-column:span 1; }
+  .process-inner { grid-template-columns:1fr; gap:3rem; }
+  .tipo-grid { grid-template-columns:repeat(2,1fr); }
+  .pal-grid { grid-template-columns:repeat(2,1fr); }
+  .extras-grid { grid-template-columns:repeat(3,1fr); }
+  .testi-grid { grid-template-columns:1fr; }
+  .form-row { grid-template-columns:1fr; }
+  .wstep-sep { width:20px; }
+  .wstep { padding:0.5rem 0.7rem; font-size:0.7rem; }
+}
 </style>
 </head>
 <body>
 
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- WHATSAPP FLOAT -->
+<a class="wa-float" href="https://wa.me/573105459761" target="_blank" title="Contáctanos">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
 <!-- NAV -->
-<nav>
-  <div class="logo">Studio<span>Web</span></div>
-  <a href="#solicitar">Solicitar</a>
+<nav id="navbar">
+  <a href="#" class="nav-logo">Web<span>Craft</span> Studio</a>
+  <div class="nav-links">
+    <a href="#portfolio">Portafolio</a>
+    <a href="#proceso">Proceso</a>
+    <a href="#wizard">Tu Página</a>
+    <a href="#wizard" class="nav-cta">Comenzar</a>
+  </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-tag">Diseño web profesional</div>
-  <h1>Tu idea, <em>nuestra</em> ejecución</h1>
-  <p>Diseñamos páginas web a tu medida. Explora los estilos y cuéntanos qué necesitas.</p>
-  <div class="scroll-indicator">
-    <span>Explorar</span>
-    <div class="line"></div>
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-tag">Diseño Web Profesional</div>
+  <h1>Páginas web que<br><em>enamoran</em> y venden</h1>
+  <p>Diseñamos tu presencia digital desde cero. Tú eliges el estilo, nosotros construimos la experiencia perfecta para tu negocio.</p>
+  <div class="hero-btns">
+    <a href="#wizard" class="btn-primary">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Diseña tu página
+    </a>
+    <a href="#portfolio" class="btn-outline">Ver ejemplos</a>
   </div>
+
 </section>
 
-<!-- SHOWCASE -->
-<section>
-  <div class="reveal">
-    <div class="section-label">01 — Estilos</div>
-    <div class="section-title">Diferentes tipos de páginas web</div>
+<!-- STATS -->
+
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+  <div class="portfolio-header">
+    <div class="section-label">Ejemplos de trabajo</div>
+    <h2 class="section-title">Páginas que hemos <em>creado</em></h2>
+    <p class="section-sub">Cada proyecto es único. Explora distintos estilos y encuentra la inspiración para tu página.</p>
   </div>
-  <div class="showcase-grid">
-
-    <div class="showcase-card reveal">
-      <div class="card-preview">
-        <div class="preview-landing">
-          <div class="p-nav"><span></span><span></span><span></span></div>
-          <h4>Landing Page</h4>
-          <div class="p-btn">Descubrir</div>
-        </div>
-      </div>
-      <div class="card-info">
-        <h3>Landing Page</h3>
-        <p>Una sola página impactante para presentar tu producto, servicio o marca con un llamado a la acción claro.</p>
-      </div>
-    </div>
-
-    <div class="showcase-card reveal">
-      <div class="card-preview">
-        <div class="preview-ecommerce">
-          <div class="p-product"><div class="swatch" style="background:#E8D5C4;"></div><span>Producto</span><strong>$49.00</strong></div>
-          <div class="p-product"><div class="swatch" style="background:#C4D4E8;"></div><span>Producto</span><strong>$35.00</strong></div>
-          <div class="p-product"><div class="swatch" style="background:#D4E8C4;"></div><span>Producto</span><strong>$62.00</strong></div>
-          <div class="p-product"><div class="swatch" style="background:#E8C4D4;"></div><span>Producto</span><strong>$28.00</strong></div>
-        </div>
-      </div>
-      <div class="card-info">
-        <h3>Tienda Online</h3>
-        <p>E-commerce completo con catálogo de productos, carrito de compras y pasarela de pagos.</p>
-      </div>
-    </div>
-
-    <div class="showcase-card reveal">
-      <div class="card-preview">
-        <div class="preview-portfolio">
-          <div class="p-row">
-            <div class="p-block" style="background:#D8D8D8;"></div>
-            <div class="p-block" style="background:#E8E8E8;"></div>
-          </div>
-          <div class="p-row">
-            <div class="p-block" style="background:#C0C0C0; flex:2;"></div>
-            <div class="p-block" style="background:#DEDEDE;"></div>
+  <div class="portfolio-tabs">
+    <button class="ptab active" data-filter="all">Todos</button>
+    <button class="ptab" data-filter="tienda">Tiendas</button>
+    <button class="ptab" data-filter="corp">Corporativas</button>
+    <button class="ptab" data-filter="rest">Restaurantes</button>
+    <button class="ptab" data-filter="port">Portafolios</button>
+    <button class="ptab" data-filter="serv">Servicios</button>
+  </div>
+  <div class="portfolio-grid">
+    <!-- Tienda 1 -->
+    <div class="port-item show featured" data-cat="tienda">
+      <div class="port-preview">
+        <div class="mock-tienda" style="height:100%;min-height:220px">
+          <div class="mbar"><span></span><span></span><span></span><span style="margin-left:auto;width:50px;height:8px;background:rgba(201,169,110,0.4);border-radius:2px;"></span></div>
+          <div style="flex:1;padding:12px 16px;background:#f8f6f0">
+            <div style="display:flex;gap:8px;margin-bottom:10px">
+              <div style="width:60px;height:8px;background:#1a1a2e;border-radius:1px;opacity:0.7"></div>
+              <div style="width:40px;height:8px;background:#ccc;border-radius:1px"></div>
+              <div style="width:50px;height:8px;background:#ccc;border-radius:1px"></div>
+              <div style="margin-left:auto;width:24px;height:8px;background:#c9a96e;border-radius:10px;opacity:0.7"></div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+              <div style="aspect-ratio:3/4;background:#e2ddd5;border-radius:3px;position:relative"><div style="position:absolute;bottom:8px;left:8px;right:8px;height:5px;background:#c9a96e;border-radius:1px;opacity:0.5"></div><div style="position:absolute;bottom:16px;left:8px;width:60%;height:4px;background:#555;border-radius:1px;opacity:0.3"></div></div>
+              <div style="aspect-ratio:3/4;background:#d8e2dc;border-radius:3px;position:relative"><div style="position:absolute;bottom:8px;left:8px;right:8px;height:5px;background:#c9a96e;border-radius:1px;opacity:0.5"></div><div style="position:absolute;bottom:16px;left:8px;width:50%;height:4px;background:#555;border-radius:1px;opacity:0.3"></div></div>
+              <div style="aspect-ratio:3/4;background:#e5dfd8;border-radius:3px;position:relative"><div style="position:absolute;bottom:8px;left:8px;right:8px;height:5px;background:#c9a96e;border-radius:1px;opacity:0.5"></div><div style="position:absolute;bottom:16px;left:8px;width:70%;height:4px;background:#555;border-radius:1px;opacity:0.3"></div></div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="card-info">
-        <h3>Portafolio</h3>
-        <p>Muestra tu trabajo con galerías elegantes, perfecta para fotógrafos, diseñadores y creativos.</p>
+      <div class="port-overlay">
+        <div class="port-tag">Tienda en Línea</div>
+        <div class="port-name">Boutique Élite</div>
+        <div class="port-sub">Moda · E-commerce · Lujo</div>
       </div>
+      <div class="port-arrow">→</div>
     </div>
-
-    <div class="showcase-card reveal">
-      <div class="card-preview">
-        <div class="preview-blog">
-          <div class="p-title"></div>
-          <div class="p-img"></div>
-          <div class="p-line"></div>
-          <div class="p-line medium"></div>
-          <div class="p-line short"></div>
-          <div class="p-line"></div>
+    <!-- Corporativa -->
+    <div class="port-item show" data-cat="corp">
+      <div class="port-preview">
+        <div class="mock-corp" style="height:100%;min-height:170px">
+          <div class="mbar"><span>EMPRESA</span><span>SERVICIOS</span><span>CONTACTO</span></div>
+          <div class="mhero"><div class="mhero-text"><h4>Soluciones Empresariales</h4><div></div></div></div>
+          <div class="mcards"><div class="mcard2"></div><div class="mcard2"></div><div class="mcard2"></div></div>
         </div>
       </div>
-      <div class="card-info">
-        <h3>Blog / Noticias</h3>
-        <p>Publica artículos, noticias y contenido para posicionar tu marca y conectar con tu audiencia.</p>
+      <div class="port-overlay">
+        <div class="port-tag">Corporativa</div>
+        <div class="port-name">Nexus Corp</div>
+        <div class="port-sub">Consultoría · B2B</div>
       </div>
+      <div class="port-arrow">→</div>
     </div>
-
-    <div class="showcase-card reveal">
-      <div class="card-preview">
-        <div class="preview-restaurant">
-          <div class="p-icon">✦</div>
-          <h4>RESTAURANTE</h4>
-          <div class="p-divider"></div>
-          <span>Menú &nbsp;·&nbsp; Reservas &nbsp;·&nbsp; Ubicación</span>
+    <!-- Restaurante -->
+    <div class="port-item show" data-cat="rest">
+      <div class="port-preview">
+        <div class="mock-rest" style="height:100%;min-height:170px">
+          <div class="mbar"><span>RESTAURANTE</span></div>
+          <div class="mfull"><h4>SABORES DEL MUNDO</h4><div></div><button>RESERVAR MESA</button></div>
         </div>
       </div>
-      <div class="card-info">
-        <h3>Restaurante / Negocio Local</h3>
-        <p>Menú digital, reservas online, horarios y ubicación para negocios físicos.</p>
+      <div class="port-overlay">
+        <div class="port-tag">Restaurante</div>
+        <div class="port-name">Sabores del Mundo</div>
+        <div class="port-sub">Gastronomía · Reservas</div>
       </div>
+      <div class="port-arrow">→</div>
     </div>
-
-    <div class="showcase-card reveal">
-      <div class="card-preview">
-        <div class="preview-services">
-          <div style="font-size:0.7rem; font-weight:500; margin-bottom:5px; color:#0A0A0A;">Métricas</div>
-          <div class="p-stat"><span>SEO</span><div class="p-bar-bg"><div class="p-bar" style="width:85%;"></div></div></div>
-          <div class="p-stat"><span>Velocidad</span><div class="p-bar-bg"><div class="p-bar" style="width:92%;"></div></div></div>
-          <div class="p-stat"><span>UX</span><div class="p-bar-bg"><div class="p-bar" style="width:78%;"></div></div></div>
-          <div class="p-stat"><span>Diseño</span><div class="p-bar-bg"><div class="p-bar" style="width:95%;"></div></div></div>
-          <div class="p-stat"><span>Mobile</span><div class="p-bar-bg"><div class="p-bar" style="width:88%;"></div></div></div>
+    <!-- Portafolio -->
+    <div class="port-item show" data-cat="port">
+      <div class="port-preview">
+        <div class="mock-port" style="height:100%;min-height:170px">
+          <div class="mbar"><span>PORTAFOLIO</span><span>2024</span></div>
+          <div class="mgrid">
+            <div class="mi" style="background:#c9a96e;opacity:0.5;grid-row:span 2;border-radius:2px"></div>
+            <div class="mi" style="background:#d5cfc5;border-radius:2px"></div>
+            <div class="mi" style="background:#1a1a2e;opacity:0.6;border-radius:2px"></div>
+          </div>
         </div>
       </div>
-      <div class="card-info">
-        <h3>Servicios Profesionales</h3>
-        <p>Web corporativa con secciones de servicios, equipo, testimonios y formulario de contacto.</p>
+      <div class="port-overlay">
+        <div class="port-tag">Portafolio</div>
+        <div class="port-name">Studio Moreno</div>
+        <div class="port-sub">Fotografía · Arte</div>
       </div>
+      <div class="port-arrow">→</div>
     </div>
-
+    <!-- Servicios -->
+    <div class="port-item show" data-cat="serv">
+      <div class="port-preview">
+        <div class="mock-serv" style="height:100%;min-height:170px">
+          <div class="mbar"><span>SALUD</span><span>SERVICIOS</span><span>CITAS</span></div>
+          <div class="mbody2">
+            <div class="mhero3"><span>Centro Médico Especializado</span></div>
+            <div class="mservs"><div></div><div></div><div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-tag">Servicios</div>
+        <div class="port-name">MediCare Plus</div>
+        <div class="port-sub">Salud · Citas Online</div>
+      </div>
+      <div class="port-arrow">→</div>
+    </div>
+    <!-- Landing -->
+    <div class="port-item show" data-cat="serv">
+      <div class="port-preview">
+        <div class="mock-land" style="height:100%;min-height:170px">
+          <div class="mbar"><span>APP</span><span>PRECIO</span><span>CONTACTO</span></div>
+          <div class="mhero2"><h4>Tu negocio, online ya</h4><div class="mbtn">EMPEZAR GRATIS</div></div>
+          <div class="mfeats"><div></div><div></div><div></div><div></div></div>
+        </div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-tag">Landing Page</div>
+        <div class="port-name">LaunchPad App</div>
+        <div class="port-sub">SaaS · Conversión</div>
+      </div>
+      <div class="port-arrow">→</div>
+    </div>
+    <!-- Tienda 2 -->
+    <div class="port-item" data-cat="tienda">
+      <div class="port-preview">
+        <div style="width:100%;height:100%;min-height:170px;background:#0d1a10;display:flex;flex-direction:column">
+          <div style="height:22px;background:rgba(255,255,255,0.04);display:flex;align-items:center;padding:0 10px"><span style="font-size:7px;color:#6bb878;letter-spacing:2px;font-family:serif">ORGANIC STORE</span></div>
+          <div style="flex:1;padding:8px;display:grid;grid-template-columns:1fr 1fr;gap:5px">
+            <div style="background:rgba(107,184,120,0.12);border-radius:2px;border:1px solid rgba(107,184,120,0.2)"></div>
+            <div style="background:rgba(107,184,120,0.08);border-radius:2px"></div>
+            <div style="background:rgba(107,184,120,0.08);border-radius:2px"></div>
+            <div style="background:rgba(107,184,120,0.12);border-radius:2px;border:1px solid rgba(107,184,120,0.2)"></div>
+          </div>
+        </div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-tag">Tienda · Orgánicos</div>
+        <div class="port-name">Green Market</div>
+        <div class="port-sub">Productos naturales</div>
+      </div>
+      <div class="port-arrow">→</div>
+    </div>
+    <!-- Corp 2 -->
+    <div class="port-item" data-cat="corp">
+      <div class="port-preview">
+        <div style="width:100%;height:100%;min-height:170px;background:#f5f0e8;display:flex;flex-direction:column">
+          <div style="height:22px;background:#1a1a2e;display:flex;align-items:center;padding:0 10px;gap:8px">
+            <span style="font-size:7px;color:#c9a96e;font-family:serif;letter-spacing:1px">INMOBILIARIA</span>
+            <div style="margin-left:auto;width:36px;height:6px;background:#c9a96e;border-radius:1px;opacity:0.8"></div>
+          </div>
+          <div style="flex:1;padding:8px">
+            <div style="height:50px;background:linear-gradient(135deg,#c9a96e22,#1a1a2e22);border-radius:3px;margin-bottom:6px;display:flex;align-items:center;padding:0 8px"><span style="font-size:8px;color:#1a1a2e;font-family:serif">Tu hogar ideal, aquí</span></div>
+            <div style="display:flex;gap:4px">
+              <div style="flex:1;height:50px;background:#e8e2d8;border-radius:2px"></div>
+              <div style="flex:1;height:50px;background:#ddd8ce;border-radius:2px"></div>
+              <div style="flex:1;height:50px;background:#e8e2d8;border-radius:2px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-tag">Corporativa · Lujo</div>
+        <div class="port-name">Premium Realty</div>
+        <div class="port-sub">Bienes raíces · Propiedades</div>
+      </div>
+      <div class="port-arrow">→</div>
+    </div>
+    <!-- Rest 2 -->
+    <div class="port-item" data-cat="rest">
+      <div class="port-preview">
+        <div style="width:100%;height:100%;min-height:170px;background:#f7f0e4;display:flex;flex-direction:column">
+          <div style="height:22px;background:#3d2b1f;display:flex;align-items:center;justify-content:center"><span style="font-size:7px;color:#e8c98a;letter-spacing:3px;font-family:serif">CAFÉ & PASTELERÍA</span></div>
+          <div style="flex:1;padding:10px;display:flex;flex-direction:column;gap:8px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;flex:1">
+              <div style="background:#e8d5b0;border-radius:3px"></div>
+              <div style="background:#dfc89a;border-radius:3px"></div>
+            </div>
+            <div style="height:22px;background:#3d2b1f;border-radius:2px;display:flex;align-items:center;justify-content:center"><span style="font-size:6px;color:#e8c98a;letter-spacing:2px">VER MENÚ</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="port-overlay">
+        <div class="port-tag">Café · Panadería</div>
+        <div class="port-name">La Miel Café</div>
+        <div class="port-sub">Menú · Pedidos online</div>
+      </div>
+      <div class="port-arrow">→</div>
+    </div>
   </div>
 </section>
 
-<!-- FEATURES -->
-<section class="dark">
-  <div class="reveal">
-    <div class="section-label">02 — Proceso</div>
-    <div class="section-title">Cómo trabajamos</div>
-  </div>
-  <div class="features-row reveal">
-    <div class="feature">
-      <div class="number">01</div>
-      <h3>Cuéntanos tu idea</h3>
-      <p>Llena el formulario con los detalles de tu proyecto. Mientras más información nos des, mejor será el resultado.</p>
+<!-- PROCESO -->
+<section class="process" id="proceso">
+  <div class="process-inner">
+    <div>
+      <div class="section-label">Cómo trabajamos</div>
+      <h2 class="section-title">Tu página lista<br>en <em>4 pasos</em></h2>
+      <p class="section-sub" style="margin-top:1rem">Un proceso simple y transparente. Desde tu idea hasta una página web que genera resultados.</p>
+      <a href="#wizard" class="btn-primary" style="margin-top:2rem;display:inline-flex">Empezar ahora →</a>
     </div>
-    <div class="feature">
-      <div class="number">02</div>
-      <h3>Diseño personalizado</h3>
-      <p>Creamos una propuesta visual basada en tu marca, colores y estilo. Tú apruebas antes de avanzar.</p>
-    </div>
-    <div class="feature">
-      <div class="number">03</div>
-      <h3>Desarrollo y entrega</h3>
-      <p>Programamos tu sitio web funcional, responsive y optimizado. Lo publicamos y te damos control total.</p>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3>Cuéntanos tu visión</h3>
+          <p>Completa nuestro formulario inteligente. Elige el tipo de página, colores y funcionalidades. Solo toma 3 minutos.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3>Diseño personalizado</h3>
+          <p>Nuestro equipo crea una propuesta visual única basada en tu marca, público y objetivos de negocio.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3>Revisión y ajustes</h3>
+          <p>Te mostramos el diseño y realizamos todos los ajustes que necesites hasta que quede perfecto.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <h3>Lanzamiento y soporte</h3>
+          <p>Publicamos tu página y te acompañamos en el proceso de lanzamiento con soporte personalizado.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FORM -->
-<section class="form-section" id="solicitar">
-  <div class="reveal">
-    <div class="section-label" style="text-align:center;">03 — Tu proyecto</div>
-    <div class="section-title">Cuéntanos sobre tu página web ideal</div>
-    <p class="form-subtitle">Completa los datos y te contactaremos por WhatsApp con una propuesta personalizada.</p>
+<!-- WIZARD -->
+<section class="wizard-section" id="wizard">
+  <div class="wizard-inner">
+    <div class="wizard-header">
+      <div class="section-label">Tu proyecto</div>
+      <h2 class="section-title">Diseña tu página<br><em>ahora mismo</em></h2>
+      <p class="section-sub">Personaliza cada detalle. En minutos enviamos tu solicitud a nuestro equipo.</p>
+    </div>
+
+    <div class="wizard-steps">
+      <div class="wstep active" id="ws1"><span class="wstep-num">1</span>Tipo</div>
+      <div class="wstep-sep"></div>
+      <div class="wstep" id="ws2"><span class="wstep-num">2</span>Estilo</div>
+      <div class="wstep-sep"></div>
+      <div class="wstep" id="ws3"><span class="wstep-num">3</span>Marca</div>
+      <div class="wstep-sep"></div>
+      <div class="wstep" id="ws4"><span class="wstep-num">4</span>Extras</div>
+      <div class="wstep-sep"></div>
+      <div class="wstep" id="ws5"><span class="wstep-num">5</span>Enviar</div>
+    </div>
+
+    <!-- PANEL 1: Tipo -->
+    <div class="wizard-panel active" id="wp1">
+      <div class="tipo-grid">
+        <div class="tipo-card" data-v="tienda" onclick="selTipo(this)">
+          <div class="tipo-preview"><div class="mock-tienda" style="height:140px"><div class="mbar"><span></span><span></span><span></span></div><div class="mbody"><div class="mcard"></div><div class="mcard"></div><div class="mcard"></div></div></div></div>
+          <div class="tipo-info"><h3>Tienda en Línea</h3><p>Vende productos con carrito y pagos</p></div>
+        </div>
+        <div class="tipo-card" data-v="empresa" onclick="selTipo(this)">
+          <div class="tipo-preview"><div class="mock-corp" style="height:140px"><div class="mbar"><span>EMPRESA</span></div><div class="mhero"><div class="mhero-text"><h4>Corporativa</h4><div></div></div></div><div class="mcards"><div class="mcard2"></div><div class="mcard2"></div><div class="mcard2"></div></div></div></div>
+          <div class="tipo-info"><h3>Corporativa</h3><p>Presencia profesional de empresa</p></div>
+        </div>
+        <div class="tipo-card" data-v="portafolio" onclick="selTipo(this)">
+          <div class="tipo-preview"><div class="mock-port" style="height:140px"><div class="mbar"><span>PORTAFOLIO</span><span>2024</span></div><div class="mgrid"><div class="mi" style="background:#c9a96e;opacity:0.5;grid-row:span 2;border-radius:2px"></div><div class="mi" style="background:#d5cfc5;border-radius:2px"></div><div class="mi" style="background:#1a1a2e;opacity:0.6;border-radius:2px"></div></div></div></div>
+          <div class="tipo-info"><h3>Portafolio</h3><p>Muestra tu trabajo y proyectos</p></div>
+        </div>
+        <div class="tipo-card" data-v="restaurante" onclick="selTipo(this)">
+          <div class="tipo-preview"><div class="mock-rest" style="height:140px"><div class="mbar"><span>RESTAURANTE</span></div><div class="mfull"><h4>MI RESTAURANTE</h4><div></div></div></div></div>
+          <div class="tipo-info"><h3>Restaurante / Café</h3><p>Menú, reservas y galería</p></div>
+        </div>
+        <div class="tipo-card" data-v="servicios" onclick="selTipo(this)">
+          <div class="tipo-preview"><div class="mock-serv" style="height:140px"><div class="mbar"><span>SERVICIOS</span></div><div class="mbody2"><div class="mhero3"><span>Servicios</span></div><div class="mservs"><div></div><div></div><div></div></div></div></div></div>
+          <div class="tipo-info"><h3>Servicios</h3><p>Consultoría, salud, educación</p></div>
+        </div>
+        <div class="tipo-card" data-v="landing" onclick="selTipo(this)">
+          <div class="tipo-preview"><div class="mock-land" style="height:140px"><div class="mbar"><span>LANDING</span></div><div class="mhero2"><h4>Tu producto</h4><div class="mbtn">COMENZAR</div></div><div class="mfeats"><div></div><div></div><div></div></div></div></div>
+          <div class="tipo-info"><h3>Landing Page</h3><p>Página de conversión y ventas</p></div>
+        </div>
+      </div>
+      <div class="wiz-nav">
+        <button class="wbtn-next" onclick="goStep(2)">Siguiente: Estilo →</button>
+      </div>
+    </div>
+
+    <!-- PANEL 2: Paleta -->
+    <div class="wizard-panel" id="wp2">
+      <div class="pal-grid">
+        <div class="pal-card" data-v="Lujo Dorado" onclick="selPal(this)"><div class="pal-swatches"><span style="background:#1a1a2e"></span><span style="background:#c9a96e"></span><span style="background:#8b6f3d"></span><span style="background:#f5f0e8"></span></div><div class="pal-name">Lujo Dorado</div></div>
+        <div class="pal-card" data-v="Oceánico" onclick="selPal(this)"><div class="pal-swatches"><span style="background:#0b2d4e"></span><span style="background:#1a7fc1"></span><span style="background:#7ac5e8"></span><span style="background:#e8f6fc"></span></div><div class="pal-name">Oceánico</div></div>
+        <div class="pal-card" data-v="Salvia Natural" onclick="selPal(this)"><div class="pal-swatches"><span style="background:#2d4a3e"></span><span style="background:#5a8c72"></span><span style="background:#a8c9b4"></span><span style="background:#f0f7f2"></span></div><div class="pal-name">Salvia Natural</div></div>
+        <div class="pal-card" data-v="Carmesí" onclick="selPal(this)"><div class="pal-swatches"><span style="background:#1a0a0a"></span><span style="background:#8b1a1a"></span><span style="background:#d4453e"></span><span style="background:#fdf2f2"></span></div><div class="pal-name">Carmesí</div></div>
+        <div class="pal-card" data-v="Noche Púrpura" onclick="selPal(this)"><div class="pal-swatches"><span style="background:#080818"></span><span style="background:#2d1b69"></span><span style="background:#7c5cbf"></span><span style="background:#e8e0ff"></span></div><div class="pal-name">Noche Púrpura</div></div>
+        <div class="pal-card" data-v="Minimalista B&N" onclick="selPal(this)"><div class="pal-swatches"><span style="background:#0a0a0a"></span><span style="background:#4a4a4a"></span><span style="background:#c0c0c0"></span><span style="background:#f8f8f8"></span></div><div class="pal-name">Minimalista</div></div>
+        <div class="pal-card" data-v="Terracota" onclick="selPal(this)"><div class="pal-swatches"><span style="background:#3d1f15"></span><span style="background:#c2603a"></span><span style="background:#e8a882"></span><span style="background:#fdf5f0"></span></div><div class="pal-name">Terracota</div></div>
+        <div class="pal-card" data-v="Azul Corporativo" onclick="selPal(this)"><div class="pal-swatches"><span style="background:#0a1628"></span><span style="background:#1e3d7b"></span><span style="background:#4a7fc9"></span><span style="background:#f0f4fc"></span></div><div class="pal-name">Azul Corporativo</div></div>
+        <!-- Colores del logo -->
+        <div class="pal-card" id="pal-logo-card" data-v="colores-logo" onclick="selPal(this)" style="grid-column:span 2;border-style:dashed;">
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 10px 0;">
+            <div id="logo-swatch-preview" style="display:flex;height:44px;flex:1;border-radius:3px;overflow:hidden;transition:all 0.3s;">
+              <span id="ls1" style="flex:1;background:#c9a96e;transition:background 0.3s;"></span>
+              <span id="ls2" style="flex:1;background:#1a1a2e;transition:background 0.3s;"></span>
+              <span id="ls3" style="flex:1;background:#f5f0e8;transition:background 0.3s;"></span>
+            </div>
+          </div>
+          <div style="padding:8px 10px 10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+            <div class="pal-name" style="margin:0;">Usar colores de mi logo</div>
+            <div style="display:flex;gap:8px;align-items:center;" onclick="event.stopPropagation()">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                <label style="font-size:0.62rem;color:var(--text-dim);letter-spacing:0.05em;text-transform:uppercase;">Color 1</label>
+                <input type="color" id="lc1" value="#c9a96e" oninput="updateLogoColors()" style="width:36px;height:28px;border:1px solid var(--border);border-radius:4px;background:transparent;cursor:pointer;padding:2px;">
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                <label style="font-size:0.62rem;color:var(--text-dim);letter-spacing:0.05em;text-transform:uppercase;">Color 2</label>
+                <input type="color" id="lc2" value="#1a1a2e" oninput="updateLogoColors()" style="width:36px;height:28px;border:1px solid var(--border);border-radius:4px;background:transparent;cursor:pointer;padding:2px;">
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+                <label style="font-size:0.62rem;color:var(--text-dim);letter-spacing:0.05em;text-transform:uppercase;">Color 3</label>
+                <input type="color" id="lc3" value="#f5f0e8" oninput="updateLogoColors()" style="width:36px;height:28px;border:1px solid var(--border);border-radius:4px;background:transparent;cursor:pointer;padding:2px;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wiz-nav">
+        <button class="wbtn-back" onclick="goStep(1)">← Atrás</button>
+        <button class="wbtn-next" onclick="goStep(3)">Siguiente: Marca →</button>
+      </div>
+    </div>
+
+    <!-- PANEL 3: Marca -->
+    <div class="wizard-panel" id="wp3">
+      <div class="form-row">
+        <div class="fgroup"><label>Nombre del negocio</label><input id="f-nombre" type="text" placeholder="Ej: Café del Parque, Studio Nova..."></div>
+        <div class="fgroup"><label>Industria / Sector</label><input id="f-sector" type="text" placeholder="Ej: Moda, Salud, Tecnología..."></div>
+      </div>
+      <div class="fgroup"><label>¿Tienes logo?</label></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-bottom:1.2rem">
+        <div class="extra-btn" data-v="Sí, tengo logo" onclick="selLogo(this)"><div class="eicon">✅</div><span>Sí, tengo logo</span></div>
+        <div class="extra-btn" data-v="Crear logo nuevo" onclick="selLogo(this)"><div class="eicon">🎨</div><span>Crear logo nuevo</span></div>
+        <div class="extra-btn" data-v="Solo texto" onclick="selLogo(this)"><div class="eicon">🔤</div><span>Solo texto</span></div>
+      </div>
+      <div class="fgroup"><label>Descripción del negocio</label><textarea id="f-desc" placeholder="¿A qué te dedicas? ¿Quiénes son tus clientes? ¿Qué te hace especial?"></textarea></div>
+      <div class="wiz-nav">
+        <button class="wbtn-back" onclick="goStep(2)">← Atrás</button>
+        <button class="wbtn-next" onclick="goStep(4)">Siguiente: Extras →</button>
+      </div>
+    </div>
+
+    <!-- PANEL 4: Extras -->
+    <div class="wizard-panel" id="wp4">
+      <div class="extras-grid">
+        <div class="extra-btn" data-v="Botón WhatsApp" onclick="togExtra(this)"><div class="eicon">💬</div><span>Botón WhatsApp</span></div>
+        <div class="extra-btn" data-v="Galería de fotos" onclick="togExtra(this)"><div class="eicon">🖼</div><span>Galería fotos</span></div>
+        <div class="extra-btn" data-v="Blog/Noticias" onclick="togExtra(this)"><div class="eicon">✍</div><span>Blog / Noticias</span></div>
+        <div class="extra-btn" data-v="Reservas online" onclick="togExtra(this)"><div class="eicon">📅</div><span>Reservas online</span></div>
+        <div class="extra-btn" data-v="Mapa y ubicación" onclick="togExtra(this)"><div class="eicon">📍</div><span>Mapa</span></div>
+        <div class="extra-btn" data-v="Testimonios" onclick="togExtra(this)"><div class="eicon">⭐</div><span>Testimonios</span></div>
+        <div class="extra-btn" data-v="Formulario contacto" onclick="togExtra(this)"><div class="eicon">📋</div><span>Formulario</span></div>
+        <div class="extra-btn" data-v="Chat en vivo" onclick="togExtra(this)"><div class="eicon">🤖</div><span>Chat en vivo</span></div>
+        <div class="extra-btn" data-v="Videos" onclick="togExtra(this)"><div class="eicon">🎬</div><span>Videos</span></div>
+        <div class="extra-btn" data-v="Redes sociales" onclick="togExtra(this)"><div class="eicon">📱</div><span>Redes sociales</span></div>
+        <div class="extra-btn" data-v="Catálogo PDF" onclick="togExtra(this)"><div class="eicon">📦</div><span>Catálogo PDF</span></div>
+        <div class="extra-btn" data-v="Multiidioma" onclick="togExtra(this)"><div class="eicon">🌐</div><span>Multiidioma</span></div>
+      </div>
+      <div class="fgroup"><label>Tu nombre y teléfono / email</label><input id="f-contacto" type="text" placeholder="Ej: Carlos Pérez · 3001234567 · carlos@empresa.com"></div>
+      <div class="fgroup"><label>Notas adicionales</label><textarea id="f-notas" placeholder="Referencias, páginas que te gustan, presupuesto, fecha límite..." style="min-height:80px"></textarea></div>
+      <div class="wiz-nav">
+        <button class="wbtn-back" onclick="goStep(3)">← Atrás</button>
+        <button class="wbtn-next" onclick="goStep(5)">Ver resumen →</button>
+      </div>
+    </div>
+
+    <!-- PANEL 5: Resumen -->
+    <div class="wizard-panel" id="wp5">
+      <div class="summary-card" id="summary-content"></div>
+      <div style="background:rgba(201,169,110,0.06);border:1px solid rgba(201,169,110,0.2);border-radius:3px;padding:1rem 1.2rem;margin-bottom:1.5rem;font-size:0.82rem;color:var(--text-muted);line-height:1.6">
+        📲 Tu solicitud será enviada por WhatsApp directamente a nuestro equipo. Te contactaremos en menos de <strong style="color:var(--gold)">24 horas</strong>.
+      </div>
+      <div class="success-msg" id="success-msg">
+        <div class="success-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M8 16l5 5 11-11" stroke="#0d0d0d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>¡Solicitud enviada!</h3>
+        <p>Tu proyecto fue enviado por WhatsApp.<br>Nuestro equipo te contactará muy pronto.</p>
+      </div>
+      <div class="wiz-nav" id="wiz-final-nav">
+        <button class="wbtn-back" onclick="goStep(4)">← Atrás</button>
+        <button class="wbtn-send" onclick="enviar()">Enviar por WhatsApp →</button>
+      </div>
+    </div>
   </div>
-
-  <form id="webForm" class="reveal">
-
-    <!-- Datos personales -->
-    <div class="form-row">
-      <div class="form-group">
-        <label>Nombre completo</label>
-        <input type="text" id="nombre" placeholder="Tu nombre" required>
-      </div>
-      <div class="form-group">
-        <label>Nombre de tu marca</label>
-        <input type="text" id="marca" placeholder="Nombre de tu negocio" required>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="email" placeholder="tu@email.com">
-      </div>
-      <div class="form-group">
-        <label>WhatsApp / Teléfono</label>
-        <input type="tel" id="telefono" placeholder="+57 300 000 0000">
-      </div>
-    </div>
-
-    <!-- Tipo de página -->
-    <div class="form-group">
-      <label>¿Qué tipo de página necesitas?</label>
-      <div class="options-grid" id="tipoPagina">
-        <div class="option-card" data-value="Landing Page" onclick="selectOption(this, 'tipoPagina')">
-          <div class="option-icon">🚀</div>
-          <div class="option-label">Landing Page</div>
-        </div>
-        <div class="option-card" data-value="Tienda Online" onclick="selectOption(this, 'tipoPagina')">
-          <div class="option-icon">🛒</div>
-          <div class="option-label">Tienda Online</div>
-        </div>
-        <div class="option-card" data-value="Portafolio" onclick="selectOption(this, 'tipoPagina')">
-          <div class="option-icon">🎨</div>
-          <div class="option-label">Portafolio</div>
-        </div>
-        <div class="option-card" data-value="Blog" onclick="selectOption(this, 'tipoPagina')">
-          <div class="option-icon">📝</div>
-          <div class="option-label">Blog</div>
-        </div>
-        <div class="option-card" data-value="Restaurante / Local" onclick="selectOption(this, 'tipoPagina')">
-          <div class="option-icon">🍽️</div>
-          <div class="option-label">Restaurante</div>
-        </div>
-        <div class="option-card" data-value="Servicios Profesionales" onclick="selectOption(this, 'tipoPagina')">
-          <div class="option-icon">💼</div>
-          <div class="option-label">Servicios</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Colores -->
-    <div class="form-group">
-      <label>¿Qué colores quieres para tu web?</label>
-      <div class="color-options" id="coloresWeb">
-        <div class="color-swatch" style="background:#1A1A1A;" data-color="Negro" onclick="toggleColor(this)"></div>
-        <div class="color-swatch" style="background:#2563EB;" data-color="Azul" onclick="toggleColor(this)"></div>
-        <div class="color-swatch" style="background:#DC2626;" data-color="Rojo" onclick="toggleColor(this)"></div>
-        <div class="color-swatch" style="background:#16A34A;" data-color="Verde" onclick="toggleColor(this)"></div>
-        <div class="color-swatch" style="background:#9333EA;" data-color="Morado" onclick="toggleColor(this)"></div>
-        <div class="color-swatch" style="background:#EA580C;" data-color="Naranja" onclick="toggleColor(this)"></div>
-        <div class="color-swatch" style="background:#DB2777;" data-color="Rosa" onclick="toggleColor(this)"></div>
-        <div class="color-swatch" style="background:#D4A574;" data-color="Dorado" onclick="toggleColor(this)"></div>
-        <div class="color-custom" title="Color personalizado">
-          <input type="color" id="colorCustom" value="#C8FF00" onchange="customColorSelected(this)">
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>¿Prefieres usar los colores de tu logo?</label>
-      <div class="options-grid" id="usarColoresLogo">
-        <div class="option-card" data-value="Sí, usar colores de mi logo" onclick="selectOption(this, 'usarColoresLogo')">
-          <div class="option-label">Sí, los de mi logo</div>
-        </div>
-        <div class="option-card" data-value="No, quiero colores nuevos" onclick="selectOption(this, 'usarColoresLogo')">
-          <div class="option-label">No, colores nuevos</div>
-        </div>
-        <div class="option-card" data-value="No tengo logo aún" onclick="selectOption(this, 'usarColoresLogo')">
-          <div class="option-label">No tengo logo</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Logo -->
-    <div class="form-group">
-      <label>Sube tu logo (si tienes)</label>
-      <div class="upload-area" id="logoUpload">
-        <div class="upload-icon">☁️</div>
-        <p>Haz clic o arrastra tu logo aquí</p>
-        <small>PNG, JPG o SVG — máx. 5MB</small>
-        <input type="file" id="logoFile" accept="image/*" onchange="handleUpload(this, 'logoPreview')">
-        <div class="upload-preview" id="logoPreview"></div>
-      </div>
-    </div>
-
-    <!-- Catálogo -->
-    <div class="form-group">
-      <label>Sube tu catálogo o lista de productos (si aplica)</label>
-      <div class="upload-area" id="catalogoUpload">
-        <div class="upload-icon">📄</div>
-        <p>PDF, Excel o imágenes de tu catálogo</p>
-        <small>PDF, XLSX, JPG, PNG — máx. 10MB</small>
-        <input type="file" id="catalogoFile" accept=".pdf,.xlsx,.xls,.jpg,.jpeg,.png" multiple onchange="handleUpload(this, 'catalogoPreview')">
-        <div class="upload-preview" id="catalogoPreview"></div>
-      </div>
-    </div>
-
-    <!-- Secciones -->
-    <div class="form-group">
-      <label>¿Qué secciones necesitas? (selecciona varias)</label>
-      <div class="options-grid" id="secciones">
-        <div class="option-card multi" data-value="Inicio" onclick="toggleMulti(this)">
-          <div class="option-label">Inicio</div>
-        </div>
-        <div class="option-card multi" data-value="Nosotros" onclick="toggleMulti(this)">
-          <div class="option-label">Nosotros</div>
-        </div>
-        <div class="option-card multi" data-value="Servicios" onclick="toggleMulti(this)">
-          <div class="option-label">Servicios</div>
-        </div>
-        <div class="option-card multi" data-value="Productos" onclick="toggleMulti(this)">
-          <div class="option-label">Productos</div>
-        </div>
-        <div class="option-card multi" data-value="Galería" onclick="toggleMulti(this)">
-          <div class="option-label">Galería</div>
-        </div>
-        <div class="option-card multi" data-value="Testimonios" onclick="toggleMulti(this)">
-          <div class="option-label">Testimonios</div>
-        </div>
-        <div class="option-card multi" data-value="Blog" onclick="toggleMulti(this)">
-          <div class="option-label">Blog</div>
-        </div>
-        <div class="option-card multi" data-value="Contacto" onclick="toggleMulti(this)">
-          <div class="option-label">Contacto</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Estilo -->
-    <div class="form-group">
-      <label>¿Qué estilo visual prefieres?</label>
-      <div class="options-grid" id="estiloVisual">
-        <div class="option-card" data-value="Minimalista" onclick="selectOption(this, 'estiloVisual')">
-          <div class="option-icon">◻️</div>
-          <div class="option-label">Minimalista</div>
-        </div>
-        <div class="option-card" data-value="Moderno y colorido" onclick="selectOption(this, 'estiloVisual')">
-          <div class="option-icon">🌈</div>
-          <div class="option-label">Moderno</div>
-        </div>
-        <div class="option-card" data-value="Elegante y lujoso" onclick="selectOption(this, 'estiloVisual')">
-          <div class="option-icon">✨</div>
-          <div class="option-label">Elegante</div>
-        </div>
-        <div class="option-card" data-value="Divertido y juvenil" onclick="selectOption(this, 'estiloVisual')">
-          <div class="option-icon">🎉</div>
-          <div class="option-label">Divertido</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Descripción -->
-    <div class="form-group">
-      <label>Describe tu negocio y qué quieres lograr con tu web</label>
-      <textarea id="descripcion" placeholder="Cuéntanos sobre tu negocio, qué vendes o haces, a quién te diriges y cualquier detalle que nos ayude a crear la página perfecta para ti..."></textarea>
-    </div>
-
-    <div class="form-group">
-      <label>¿Tienes alguna referencia o web que te guste?</label>
-      <input type="text" id="referencia" placeholder="Pega un link de alguna web que te inspire (opcional)">
-    </div>
-
-    <button type="submit" class="submit-btn">Enviar solicitud por WhatsApp →</button>
-  </form>
 </section>
 
+
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <h2>¿Listo para tener<br>tu página <em>ideal</em>?</h2>
+  <p>Comienza ahora. Es gratis y solo toma 3 minutos.</p>
+  <a href="#wizard" class="cta-btn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    Diseña mi página web
+  </a>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  <p>StudioWeb — Diseño web profesional a tu medida</p>
+  <div class="footer-logo">Web<span>Craft</span> Studio</div>
+  <div class="footer-copy">© 2025 WebCraft Studio · Diseño Web Profesional</div>
+  <div class="footer-links">
+    <a href="https://wa.me/573105459761" target="_blank">WhatsApp</a>
+    <a href="#portfolio">Portafolio</a>
+    <a href="#wizard">Cotizar</a>
+  </div>
 </footer>
 
 <script>
-  // Selections state
-  const state = {
-    tipoPagina: '',
-    colores: [],
-    customColor: '',
-    usarColoresLogo: '',
-    secciones: [],
-    estiloVisual: '',
-  };
+// Cursor
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX+'px'; cur.style.top = e.clientY+'px';
+  ring.style.left = e.clientX+'px'; ring.style.top = e.clientY+'px';
+});
+document.querySelectorAll('a,button,.tipo-card,.pal-card,.extra-btn,.port-item,.ptab').forEach(el => {
+  el.addEventListener('mouseenter', () => ring.classList.add('expand'));
+  el.addEventListener('mouseleave', () => ring.classList.remove('expand'));
+});
 
-  // Single select
-  function selectOption(el, group) {
-    document.querySelectorAll(`#${group} .option-card`).forEach(c => c.classList.remove('selected'));
-    el.classList.add('selected');
-    state[group] = el.dataset.value;
-  }
+// Nav scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+});
 
-  // Multi select
-  function toggleMulti(el) {
-    el.classList.toggle('selected');
-    const val = el.dataset.value;
-    if (el.classList.contains('selected')) {
-      state.secciones.push(val);
-    } else {
-      state.secciones = state.secciones.filter(s => s !== val);
-    }
-  }
-
-  // Color toggles
-  function toggleColor(el) {
-    el.classList.toggle('selected');
-    const color = el.dataset.color;
-    if (el.classList.contains('selected')) {
-      state.colores.push(color);
-    } else {
-      state.colores = state.colores.filter(c => c !== color);
-    }
-  }
-
-  function customColorSelected(input) {
-    state.customColor = input.value;
-  }
-
-  // File upload
-  function handleUpload(input, previewId) {
-    const preview = document.getElementById(previewId);
-    if (input.files.length > 0) {
-      const names = Array.from(input.files).map(f => f.name).join(', ');
-      preview.textContent = '✓ ' + names;
-    }
-  }
-
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
+// Portfolio filter
+document.querySelectorAll('.ptab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const f = tab.dataset.filter;
+    document.querySelectorAll('.port-item').forEach(item => {
+      item.classList.toggle('show', f === 'all' || item.dataset.cat === f);
     });
-  }, { threshold: 0.1 });
+  });
+});
 
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+// State
+let S = { tipo:'', paleta:'', logo:'', nombre:'', sector:'', desc:'', extras:[], contacto:'', notas:'' };
 
-  // Form submit -> WhatsApp
-  document.getElementById('webForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+function selTipo(el){
+  document.querySelectorAll('.tipo-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel'); S.tipo=el.dataset.v;
+}
+function updateLogoColors(){
+  const c1=document.getElementById('lc1').value;
+  const c2=document.getElementById('lc2').value;
+  const c3=document.getElementById('lc3').value;
+  document.getElementById('ls1').style.background=c1;
+  document.getElementById('ls2').style.background=c2;
+  document.getElementById('ls3').style.background=c3;
+  S.logoColors={c1,c2,c3};
+  if(S.paleta==='colores-logo'){
+    S.paleta=`Colores de logo (${c1}, ${c2}, ${c3})`;
+  }
+}
 
-    const nombre = document.getElementById('nombre').value;
-    const marca = document.getElementById('marca').value;
-    const email = document.getElementById('email').value;
-    const telefono = document.getElementById('telefono').value;
-    const descripcion = document.getElementById('descripcion').value;
-    const referencia = document.getElementById('referencia').value;
+function selPal(el){
+  document.querySelectorAll('.pal-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  if(el.dataset.v==='colores-logo'){
+    const c1=document.getElementById('lc1').value;
+    const c2=document.getElementById('lc2').value;
+    const c3=document.getElementById('lc3').value;
+    S.paleta=`Colores de logo (${c1}, ${c2}, ${c3})`;
+    S.logoColors={c1,c2,c3};
+  } else {
+    S.paleta=el.dataset.v;
+    S.logoColors=null;
+  }
+}
+function selLogo(el){
+  document.querySelectorAll('[onclick^="selLogo"]').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel'); S.logo=el.dataset.v;
+}
+function togExtra(el){
+  el.classList.toggle('sel');
+  const v=el.dataset.v, i=S.extras.indexOf(v);
+  i>-1 ? S.extras.splice(i,1) : S.extras.push(v);
+}
 
-    const coloresText = state.colores.length > 0 ? state.colores.join(', ') : 'No seleccionados';
-    const coloresExtra = state.customColor ? ` + personalizado: ${state.customColor}` : '';
-    const seccionesText = state.secciones.length > 0 ? state.secciones.join(', ') : 'No seleccionadas';
+function goStep(n) {
+  if(n===2 && !S.tipo){ alert('Por favor selecciona el tipo de página'); return; }
+  if(n===3 && !S.paleta){ alert('Por favor elige una paleta de colores'); return; }
+  if(n===5){
+    S.nombre=document.getElementById('f-nombre').value;
+    S.sector=document.getElementById('f-sector').value;
+    S.desc=document.getElementById('f-desc').value;
+    S.contacto=document.getElementById('f-contacto').value;
+    S.notas=document.getElementById('f-notas').value;
+    if(!S.nombre){ alert('Por favor escribe el nombre de tu negocio'); return; }
+    buildSummary();
+  }
+  for(let i=1;i<=5;i++){
+    document.getElementById('wp'+i).classList.toggle('active',i===n);
+    const ws=document.getElementById('ws'+i);
+    ws.classList.toggle('active',i===n);
+  }
+  document.getElementById('wizard').scrollIntoView({behavior:'smooth',block:'start'});
+}
 
-    const logoFile = document.getElementById('logoFile');
-    const logoText = logoFile.files.length > 0 ? `Sí (${logoFile.files[0].name})` : 'No adjuntó';
-    const catalogoFile = document.getElementById('catalogoFile');
-    const catalogoText = catalogoFile.files.length > 0 
-      ? `Sí (${Array.from(catalogoFile.files
+function buildSummary(){
+  const paletaVal = S.logoColors
+    ? `Colores de mi logo &nbsp;<span style="display:inline-flex;gap:4px;vertical-align:middle">${['c1','c2','c3'].map(k=>`<span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:${S.logoColors[k]};border:1px solid rgba(255,255,255,0.15)"></span>`).join('')}</span>&nbsp; ${S.logoColors.c1}, ${S.logoColors.c2}, ${S.logoColors.c3}`
+    : (S.paleta||'No seleccionada');
+  const rows=[
+    ['Tipo de página', S.tipo||'No seleccionado'],
+    ['Paleta de colores', paletaVal],
+    ['Logo', S.logo||'No especificado'],
+    ['Nombre del negocio', S.nombre],
+    ['Sector / Industria', S.sector||'No especificado'],
+    ['Descripción', S.desc||'No especificada'],
+    ['Funcionalidades', S.extras.length ? S.extras.join(', ') : 'Ninguna adicional'],
+    ['Contacto', S.contacto||'No especificado'],
+    ['Notas', S.notas||'Ninguna'],
+  ];
+  document.getElementById('summary-content').innerHTML = rows.map(([l,v])=>`
+    <div class="sum-row"><span class="sum-lbl">${l}</span><span class="sum-val">${v}</span></div>`).join('');
+}
+
+function enviar(){
+  const msg =
+`🌐 *NUEVA SOLICITUD — DISEÑO WEB*
+
+📋 *Tipo de página:* ${S.tipo}
+🎨 *Paleta de colores:* ${S.logoColors ? `Colores de mi logo: ${S.logoColors.c1}, ${S.logoColors.c2}, ${S.logoColors.c3}` : S.paleta}
+🏷️ *Logo:* ${S.logo||'No especificado'}
+🏢 *Negocio:* ${S.nombre}
+🏭 *Sector:* ${S.sector||'—'}
+📝 *Descripción:* ${S.desc||'—'}
+⚙️ *Funcionalidades:* ${S.extras.length?S.extras.join(', '):'Ninguna adicional'}
+📞 *Contacto:* ${S.contacto||'—'}
+💬 *Notas:* ${S.notas||'—'}
+
+_Enviado desde WebCraft Studio_`;
+
+  window.open('https://wa.me/573105459761?text='+encodeURIComponent(msg),'_blank');
+  document.getElementById('success-msg').classList.add('show');
+  document.getElementById('wiz-final-nav').style.display='none';
+}
+</script>
+</body>
+</html>
