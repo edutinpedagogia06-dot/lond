@@ -630,8 +630,8 @@ footer {
 
 @media (max-width:900px) {
   nav { padding:1rem 1.5rem; }
-  section { padding:4rem 1.5rem; }
-  .stats { grid-template-columns:repeat(2,1fr); }
+  .nav-links a:not(.nav-cta) { display:none; }
+  section { padding:4rem 1.2rem; }
   .portfolio-grid { grid-template-columns:repeat(2,1fr); }
   .port-item.featured { grid-column:span 1; }
   .process-inner { grid-template-columns:1fr; gap:3rem; }
@@ -640,8 +640,89 @@ footer {
   .extras-grid { grid-template-columns:repeat(3,1fr); }
   .testi-grid { grid-template-columns:1fr; }
   .form-row { grid-template-columns:1fr; }
-  .wstep-sep { width:20px; }
-  .wstep { padding:0.5rem 0.7rem; font-size:0.7rem; }
+  .wstep-sep { width:12px; }
+  .wstep { padding:0.4rem 0.5rem; font-size:0.65rem; }
+}
+
+@media (max-width:600px) {
+  nav { padding:0.9rem 1rem; }
+  .nav-links a:not(.nav-cta) { display:none; }
+  .nav-cta { padding:0.45rem 1rem !important; font-size:0.7rem !important; }
+
+  .hero { padding:5rem 1rem 3rem; }
+  .hero h1 { font-size:2.4rem; }
+  .hero p { font-size:0.92rem; }
+  .hero-btns { flex-direction:column; align-items:center; width:100%; }
+  .hero-btns a { width:100%; text-align:center; justify-content:center; }
+
+  section { padding:3rem 1rem; }
+  .section-title { font-size:1.8rem; }
+
+  .portfolio-header { margin-bottom:2rem; }
+  .portfolio-tabs { gap:0.35rem; }
+  .ptab { padding:0.4rem 0.85rem; font-size:0.72rem; }
+  .portfolio-grid { grid-template-columns:1fr; gap:1px; }
+  .port-item.featured { grid-column:span 1; }
+  .port-overlay { opacity:1; }
+
+  .process-inner { gap:2rem; }
+  .process-step { gap:1rem; padding:1.2rem 0; }
+  .step-num { font-size:1.8rem; width:36px; }
+
+  .wizard-steps {
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:0;
+    margin-bottom:2rem;
+  }
+  .wstep {
+    flex-direction:column;
+    padding:0.5rem 0.2rem;
+    font-size:0.58rem;
+    gap:0.3rem;
+    text-align:center;
+    border:none;
+    border-bottom:2px solid transparent;
+  }
+  .wstep.active { border-bottom-color:var(--gold); background:transparent; }
+  .wstep-sep { display:none; }
+  .wstep-num { width:18px; height:18px; font-size:0.6rem; }
+
+  .tipo-grid { grid-template-columns:1fr 1fr; gap:0.65rem; }
+  .tipo-info h3 { font-size:0.78rem; }
+  .tipo-info p { font-size:0.68rem; }
+  .tipo-preview { height:110px; }
+
+  .pal-grid { grid-template-columns:1fr 1fr; gap:0.6rem; }
+  #pal-logo-card { grid-column:span 2; }
+
+  .extras-grid { grid-template-columns:repeat(3,1fr); gap:0.5rem; }
+  .extra-btn { padding:0.65rem 0.3rem; }
+  .extra-btn .eicon { font-size:1.1rem; }
+  .extra-btn span { font-size:0.65rem; }
+
+  .fgroup input, .fgroup textarea, .fgroup select { font-size:0.85rem; padding:0.7rem 0.8rem; }
+
+  .wiz-nav { flex-direction:column; gap:0.65rem; }
+  .wbtn-back { order:2; text-align:center; }
+  .wbtn-next, .wbtn-send { order:1; }
+
+  .summary-card { padding:1rem; }
+  .sum-row { flex-direction:column; gap:0.25rem; padding:0.6rem 0; }
+  .sum-lbl { min-width:unset; }
+  .sum-val { text-align:left; }
+
+  .cta-section { padding:4rem 1rem; }
+  .cta-section h2 { font-size:1.8rem; }
+  .cta-btn { width:100%; justify-content:center; padding:0.9rem 1rem; }
+
+  footer { flex-direction:column; align-items:flex-start; gap:1rem; padding:2rem 1rem; }
+  .footer-links { flex-wrap:wrap; gap:1rem; }
+
+  .wa-float { bottom:1.2rem; right:1rem; width:48px; height:48px; }
+
+  .cursor, .cursor-ring { display:none; }
+  body { cursor:auto; }
 }
 </style>
 </head>
@@ -991,30 +1072,21 @@ footer {
         <div class="pal-card" data-v="Terracota" onclick="selPal(this)"><div class="pal-swatches"><span style="background:#3d1f15"></span><span style="background:#c2603a"></span><span style="background:#e8a882"></span><span style="background:#fdf5f0"></span></div><div class="pal-name">Terracota</div></div>
         <div class="pal-card" data-v="Azul Corporativo" onclick="selPal(this)"><div class="pal-swatches"><span style="background:#0a1628"></span><span style="background:#1e3d7b"></span><span style="background:#4a7fc9"></span><span style="background:#f0f4fc"></span></div><div class="pal-name">Azul Corporativo</div></div>
         <!-- Colores del logo -->
-        <div class="pal-card" id="pal-logo-card" data-v="colores-logo" onclick="selPal(this)" style="grid-column:span 2;border-style:dashed;">
-          <div style="display:flex;align-items:center;gap:10px;padding:10px 10px 0;">
-            <div id="logo-swatch-preview" style="display:flex;height:44px;flex:1;border-radius:3px;overflow:hidden;transition:all 0.3s;">
-              <span id="ls1" style="flex:1;background:#c9a96e;transition:background 0.3s;"></span>
-              <span id="ls2" style="flex:1;background:#1a1a2e;transition:background 0.3s;"></span>
-              <span id="ls3" style="flex:1;background:#f5f0e8;transition:background 0.3s;"></span>
+        <div class="pal-card" id="pal-logo-card" data-v="colores-logo" onclick="selPal(this)" style="grid-column:span 2;border-style:dashed;cursor:pointer;">
+          <div style="padding:12px 12px 0;" onclick="event.stopPropagation()">
+            <div id="logo-upload-area" onclick="document.getElementById('logo-file-input').click()"
+              style="height:80px;border:1.5px dashed rgba(201,169,110,0.3);border-radius:6px;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;transition:border-color 0.2s;background:rgba(201,169,110,0.03);">
+              <div id="logo-placeholder" style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(201,169,110,0.6)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                <span style="font-size:0.72rem;color:var(--text-dim);">Subir imagen del logo</span>
+              </div>
+              <img id="logo-preview-img" src="" alt="Logo" style="display:none;max-height:70px;max-width:100%;border-radius:4px;object-fit:contain;">
             </div>
+            <input type="file" id="logo-file-input" accept="image/*" style="display:none;" onchange="handleLogoUpload(event)">
           </div>
-          <div style="padding:8px 10px 10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+          <div style="padding:8px 12px 12px;display:flex;align-items:center;justify-content:space-between;">
             <div class="pal-name" style="margin:0;">Usar colores de mi logo</div>
-            <div style="display:flex;gap:8px;align-items:center;" onclick="event.stopPropagation()">
-              <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-                <label style="font-size:0.62rem;color:var(--text-dim);letter-spacing:0.05em;text-transform:uppercase;">Color 1</label>
-                <input type="color" id="lc1" value="#c9a96e" oninput="updateLogoColors()" style="width:36px;height:28px;border:1px solid var(--border);border-radius:4px;background:transparent;cursor:pointer;padding:2px;">
-              </div>
-              <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-                <label style="font-size:0.62rem;color:var(--text-dim);letter-spacing:0.05em;text-transform:uppercase;">Color 2</label>
-                <input type="color" id="lc2" value="#1a1a2e" oninput="updateLogoColors()" style="width:36px;height:28px;border:1px solid var(--border);border-radius:4px;background:transparent;cursor:pointer;padding:2px;">
-              </div>
-              <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-                <label style="font-size:0.62rem;color:var(--text-dim);letter-spacing:0.05em;text-transform:uppercase;">Color 3</label>
-                <input type="color" id="lc3" value="#f5f0e8" oninput="updateLogoColors()" style="width:36px;height:28px;border:1px solid var(--border);border-radius:4px;background:transparent;cursor:pointer;padding:2px;">
-              </div>
-            </div>
+            <span id="logo-upload-status" style="font-size:0.68rem;color:var(--text-dim);"></span>
           </div>
         </div>
       </div>
@@ -1147,31 +1219,36 @@ function selTipo(el){
   document.querySelectorAll('.tipo-card').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel'); S.tipo=el.dataset.v;
 }
-function updateLogoColors(){
-  const c1=document.getElementById('lc1').value;
-  const c2=document.getElementById('lc2').value;
-  const c3=document.getElementById('lc3').value;
-  document.getElementById('ls1').style.background=c1;
-  document.getElementById('ls2').style.background=c2;
-  document.getElementById('ls3').style.background=c3;
-  S.logoColors={c1,c2,c3};
-  if(S.paleta==='colores-logo'){
-    S.paleta=`Colores de logo (${c1}, ${c2}, ${c3})`;
-  }
+function handleLogoUpload(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    const img = document.getElementById('logo-preview-img');
+    const placeholder = document.getElementById('logo-placeholder');
+    img.src = ev.target.result;
+    img.style.display = 'block';
+    placeholder.style.display = 'none';
+    document.getElementById('logo-upload-status').textContent = '✓ ' + file.name;
+    S.logoFile = ev.target.result;
+    S.logoFileName = file.name;
+    // Auto-select this card
+    selPal(document.getElementById('pal-logo-card'));
+  };
+  reader.readAsDataURL(file);
 }
 
 function selPal(el){
   document.querySelectorAll('.pal-card').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
   if(el.dataset.v==='colores-logo'){
-    const c1=document.getElementById('lc1').value;
-    const c2=document.getElementById('lc2').value;
-    const c3=document.getElementById('lc3').value;
-    S.paleta=`Colores de logo (${c1}, ${c2}, ${c3})`;
-    S.logoColors={c1,c2,c3};
+    S.paleta = S.logoFileName ? `Colores del logo (${S.logoFileName})` : 'Colores de mi logo (imagen adjunta)';
+    S.logoColors = null;
   } else {
     S.paleta=el.dataset.v;
     S.logoColors=null;
+    S.logoFile=null;
+    S.logoFileName=null;
   }
 }
 function selLogo(el){
@@ -1205,8 +1282,8 @@ function goStep(n) {
 }
 
 function buildSummary(){
-  const paletaVal = S.logoColors
-    ? `Colores de mi logo &nbsp;<span style="display:inline-flex;gap:4px;vertical-align:middle">${['c1','c2','c3'].map(k=>`<span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:${S.logoColors[k]};border:1px solid rgba(255,255,255,0.15)"></span>`).join('')}</span>&nbsp; ${S.logoColors.c1}, ${S.logoColors.c2}, ${S.logoColors.c3}`
+  const paletaVal = (S.logoFile && S.paleta && S.paleta.includes('logo'))
+    ? `Colores de mi logo &nbsp;<img src="${S.logoFile}" style="height:22px;vertical-align:middle;border-radius:3px;border:1px solid rgba(255,255,255,0.15);margin-left:4px">`
     : (S.paleta||'No seleccionada');
   const rows=[
     ['Tipo de página', S.tipo||'No seleccionado'],
@@ -1228,7 +1305,7 @@ function enviar(){
 `🌐 *NUEVA SOLICITUD — DISEÑO WEB*
 
 📋 *Tipo de página:* ${S.tipo}
-🎨 *Paleta de colores:* ${S.logoColors ? `Colores de mi logo: ${S.logoColors.c1}, ${S.logoColors.c2}, ${S.logoColors.c3}` : S.paleta}
+🎨 *Paleta de colores:* ${S.paleta}
 🏷️ *Logo:* ${S.logo||'No especificado'}
 🏢 *Negocio:* ${S.nombre}
 🏭 *Sector:* ${S.sector||'—'}
