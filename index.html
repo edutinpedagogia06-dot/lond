@@ -1399,6 +1399,7 @@ function buildSummary(){
     ['Notas', S.notas||'Ninguna'],
   ];
   document.getElementById('logo-reminder').style.display = S.logoFile ? 'block' : 'none';
+  document.getElementById('summary-content').innerHTML = rows.map(([l,v])=>`
     <div class="sum-row"><span class="sum-lbl">${l}</span><span class="sum-val">${v}</span></div>`).join('');
 }
 
