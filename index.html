@@ -1239,7 +1239,9 @@ footer {
     <!-- PANEL 5: Resumen -->
     <div class="wizard-panel" id="wp5">
       <div class="summary-card" id="summary-content"></div>
-      <div style="background:rgba(201,169,110,0.06);border:1px solid rgba(201,169,110,0.2);border-radius:3px;padding:1rem 1.2rem;margin-bottom:1.5rem;font-size:0.82rem;color:var(--text-muted);line-height:1.6">
+      <div id="logo-reminder" style="display:none;background:rgba(201,169,110,0.08);border:1px solid rgba(201,169,110,0.3);border-radius:3px;padding:0.9rem 1.1rem;margin-bottom:1rem;font-size:0.82rem;color:var(--gold);line-height:1.6;">
+        📎 <strong>Recuerda:</strong> al abrir WhatsApp envía también la imagen de tu logo como archivo adjunto en el mismo chat.
+      </div>
         📲 Tu solicitud será enviada por WhatsApp directamente a nuestro equipo. Te contactaremos en menos de <strong style="color:var(--gold)">24 horas</strong>.
       </div>
       <div class="success-msg" id="success-msg">
@@ -1363,7 +1365,7 @@ function togExtra(el){
 
 function goStep(n) {
   if(n===2 && !S.tipo){ alert('Por favor selecciona el tipo de página'); return; }
-  if(n===3 && !S.paleta){ alert('Por favor elige una paleta de colores'); return; }
+  if(n===3 && !S.paleta && !S.logoFile){ alert('Por favor elige una paleta de colores o sube la imagen de tu logo'); return; }
   if(n===5){
     S.nombre=document.getElementById('f-nombre').value;
     S.sector=document.getElementById('f-sector').value;
@@ -1396,7 +1398,7 @@ function buildSummary(){
     ['Contacto', S.contacto||'No especificado'],
     ['Notas', S.notas||'Ninguna'],
   ];
-  document.getElementById('summary-content').innerHTML = rows.map(([l,v])=>`
+  document.getElementById('logo-reminder').style.display = S.logoFile ? 'block' : 'none';
     <div class="sum-row"><span class="sum-lbl">${l}</span><span class="sum-val">${v}</span></div>`).join('');
 }
 
@@ -1405,7 +1407,7 @@ function enviar(){
 `🌐 *NUEVA SOLICITUD — DISEÑO WEB*
 
 📋 *Tipo de página:* ${S.tipo}
-🎨 *Paleta de colores:* ${S.paleta}
+🎨 *Paleta de colores:* ${S.logoFile ? `Colores de mi logo (el cliente enviará la imagen del logo a continuación)` : S.paleta}
 🏷️ *Logo:* ${S.logo||'No especificado'}
 🏢 *Negocio:* ${S.nombre}
 🏭 *Sector:* ${S.sector||'—'}
