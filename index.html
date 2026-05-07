@@ -668,6 +668,8 @@ footer {
   text-decoration:none; font-size:1.5rem;
   box-shadow:0 4px 20px rgba(37,211,102,0.4);
   transition:transform 0.2s;
+  overflow:visible;
+  isolation:isolate;
 }
 .wa-float:hover { transform:scale(1.1); }
 
@@ -767,9 +769,326 @@ footer {
   .cursor, .cursor-ring { display:none; }
   body { cursor:auto; }
 }
+
+/* ══════════════════════════════════════════════
+   ANIMACIONES DEFINITIVAS — TODO EN UNO
+══════════════════════════════════════════════ */
+
+/* ── BARRA SCROLL ── */
+@supports (animation-timeline: scroll()) {
+  .scroll-progress-bar {
+    position:fixed; top:0; left:0; z-index:9999;
+    height:3px; width:100%;
+    background:linear-gradient(90deg,var(--gold-dark),var(--gold),#fffaed,var(--gold),var(--gold-dark));
+    background-size:200% 100%;
+    box-shadow:0 0 18px rgba(201,169,110,1),0 0 50px rgba(201,169,110,0.5);
+    transform-origin:left; transform:scaleX(0);
+    animation:growBar linear, shimBarColor 3s linear infinite;
+    animation-timeline:scroll(),auto;
+  }
+  @keyframes growBar { to{transform:scaleX(1)} }
+  @keyframes shimBarColor { 0%{background-position:0% 0%} 100%{background-position:200% 0%} }
+}
+
+/* ── PARTÍCULAS ── */
+.particles-wrap{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+/* Paleta de colores elegante para animaciones */
+:root {
+  --anim-rose:    rgba(230, 100, 120, 0.9);
+  --anim-teal:    rgba(60,  200, 185, 0.9);
+  --anim-slate:   rgba(90,  140, 230, 0.9);
+  --anim-amber:   rgba(240, 185, 60,  0.95);
+  --anim-sage:    rgba(80,  200, 130, 0.88);
+  --anim-mauve:   rgba(190, 100, 220, 0.85);
+}
+
+.p{position:absolute;bottom:-20px;border-radius:50%;opacity:0;animation:rise var(--d,9s) var(--dl,0s) infinite ease-in}
+
+@keyframes rise{
+  0%  {opacity:0;transform:translateY(0) scale(0.3) rotate(0deg)}
+  12% {opacity:1}
+  75% {opacity:0.6}
+  100%{opacity:0;transform:translateY(-108vh) translateX(var(--x,30px)) scale(2.5) rotate(var(--r,200deg))}
+}
+/* Dorados */
+.p:nth-child(1) {left:2%;  --d:7s; --dl:0s;   --x:28px; --r:120deg;  width:3px; height:3px; background:var(--gold)}
+.p:nth-child(2) {left:7%;  --d:11s;--dl:1.4s; --x:-32px;--r:-90deg;  width:2px; height:2px; background:var(--anim-amber)}
+/* Teal / azul verdoso */
+.p:nth-child(3) {left:14%; --d:8s; --dl:3.1s; --x:42px; --r:200deg;  width:5px; height:5px; background:var(--anim-teal)}
+.p:nth-child(4) {left:21%; --d:13s;--dl:0.6s; --x:-22px;--r:45deg;   width:2px; height:2px; background:var(--anim-slate)}
+/* Rosa y malva */
+.p:nth-child(5) {left:29%; --d:9s; --dl:2.3s; --x:36px; --r:270deg;  width:4px; height:4px; background:var(--anim-rose)}
+.p:nth-child(6) {left:37%; --d:7s; --dl:4.7s; --x:-44px;--r:-150deg; width:2px; height:2px; background:var(--gold)}
+/* Salvia */
+.p:nth-child(7) {left:44%; --d:12s;--dl:1.1s; --x:22px; --r:90deg;   width:3px; height:3px; background:var(--anim-sage)}
+.p:nth-child(8) {left:52%; --d:8s; --dl:3.6s; --x:-28px;--r:180deg;  width:2px; height:2px; background:var(--anim-amber)}
+/* Pizarra azul */
+.p:nth-child(9) {left:59%; --d:10s;--dl:0.9s; --x:48px; --r:-60deg;  width:4px; height:4px; background:var(--anim-slate)}
+.p:nth-child(10){left:67%; --d:6s; --dl:2.6s; --x:-16px;--r:300deg;  width:2px; height:2px; background:var(--gold-light)}
+/* Malva */
+.p:nth-child(11){left:74%; --d:9s; --dl:5.2s; --x:32px; --r:135deg;  width:3px; height:3px; background:var(--anim-mauve)}
+.p:nth-child(12){left:81%; --d:11s;--dl:1.3s; --x:-38px;--r:-200deg; width:2px; height:2px; background:var(--anim-teal)}
+/* Dorados grandes */
+.p:nth-child(13){left:87%; --d:8s; --dl:6.1s; --x:20px; --r:240deg;  width:5px; height:5px; background:var(--anim-amber)}
+.p:nth-child(14){left:93%; --d:10s;--dl:3.9s; --x:-30px;--r:-120deg; width:2px; height:2px; background:var(--anim-rose)}
+.p:nth-child(15){left:11%; --d:14s;--dl:7.2s; --x:40px; --r:80deg;   width:3px; height:3px; background:var(--anim-sage)}
+.p:nth-child(16){left:26%; --d:9s; --dl:8.1s; --x:-24px;--r:-45deg;  width:2px; height:2px; background:var(--gold)}
+.p:nth-child(17){left:49%; --d:7s; --dl:9.3s; --x:34px; --r:160deg;  width:4px; height:4px; background:var(--anim-slate)}
+.p:nth-child(18){left:71%; --d:10s;--dl:4.1s; --x:-44px;--r:-80deg;  width:2px; height:2px; background:var(--anim-mauve)}
+.p:nth-child(19){left:17%; --d:8s; --dl:5.6s; --x:30px; --r:220deg;  width:3px; height:3px; background:var(--anim-teal)}
+.p:nth-child(20){left:41%; --d:12s;--dl:2.9s; --x:-20px;--r:-160deg; width:2px; height:2px; background:var(--anim-amber)}
+.p:nth-child(21){left:62%; --d:9s; --dl:6.6s; --x:44px; --r:100deg;  width:4px; height:4px; background:var(--anim-rose)}
+.p:nth-child(22){left:84%; --d:7s; --dl:1.9s; --x:-34px;--r:-220deg; width:2px; height:2px; background:var(--gold-light)}
+.p:nth-child(23){left:34%; --d:11s;--dl:10.1s;--x:24px; --r:50deg;   width:3px; height:3px; background:var(--anim-sage)}
+.p:nth-child(24){left:56%; --d:8s; --dl:0.4s; --x:-40px;--r:-30deg;  width:2px; height:2px; background:var(--anim-mauve)}
+
+/* ── NAV ── */
+nav{animation:navCinema 1s 0s cubic-bezier(0.16,1,0.3,1) both}
+@keyframes navCinema{
+  0%  {opacity:0;transform:translateY(-100%) scaleX(0.96);backdrop-filter:blur(0px)}
+  100%{opacity:1;transform:translateY(0) scaleX(1)}
+}
+
+/* ── LOGO pop con spring ── */
+.nav-logo img{animation:logoPop 1.2s 0.4s cubic-bezier(0.34,1.7,0.64,1) both}
+@keyframes logoPop{
+  from{opacity:0;transform:scale(0.3) rotate(-25deg)}
+  to  {opacity:1;transform:scale(1) rotate(0deg)}
+}
+
+/* ── HERO ── */
+.hero-tag {animation:tagReveal  0.9s 0.25s cubic-bezier(0.16,1,0.3,1) both}
+.hero h1  {animation:h1Cinema   1.2s 0.4s  cubic-bezier(0.16,1,0.3,1) both}
+.hero p   {animation:pSlide     1s   0.65s cubic-bezier(0.16,1,0.3,1) both}
+.hero-btns{animation:btnsBounce 1s   0.85s cubic-bezier(0.34,1.4,0.64,1) both}
+
+@keyframes tagReveal{
+  from{opacity:0;transform:translateY(24px) scale(0.85);letter-spacing:0.5em}
+  to  {opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes h1Cinema{
+  from{opacity:0;transform:translateY(80px) scale(0.95);filter:blur(12px)}
+  to  {opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
+}
+@keyframes pSlide{
+  from{opacity:0;transform:translateX(-60px) skewX(3deg);filter:blur(6px)}
+  to  {opacity:1;transform:translateX(0) skewX(0);filter:blur(0)}
+}
+@keyframes btnsBounce{
+  from{opacity:0;transform:translateY(40px) scale(0.85)}
+  to  {opacity:1;transform:translateY(0) scale(1)}
+}
+
+/* Hero bg — lente de luz pulsante con color */
+.hero-bg{animation:lensFlare 7s ease-in-out infinite alternate}
+@keyframes lensFlare{
+  0%  {opacity:0.6;transform:scale(1) translateY(0);   filter:hue-rotate(0deg)}
+  33% {opacity:0.85;transform:scale(1.04) translateY(-4px); filter:hue-rotate(20deg)}
+  66% {opacity:0.9;transform:scale(1.06) translateY(-8px);  filter:hue-rotate(-15deg)}
+  100%{opacity:0.7;transform:scale(1.02) translateY(4px);   filter:hue-rotate(10deg)}
+}
+
+/* Grid hero — deriva lenta */
+.hero-grid{animation:gridDrift 25s linear infinite}
+@keyframes gridDrift{
+  0%  {background-position:0 0}
+  100%{background-position:60px 60px}
+}
+
+/* Línea scan inferior del hero */
+.hero::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--anim-teal),var(--gold),var(--anim-rose),var(--anim-mauve),transparent);
+  animation:scanLine 4s ease-in-out infinite;
+  box-shadow:0 0 20px rgba(60,200,185,0.7),0 0 40px rgba(190,100,220,0.3)
+}
+@keyframes scanLine{
+  0%,100%{opacity:0;transform:scaleX(0.2)}
+  45%,55%{opacity:1;transform:scaleX(1)}
+}
+
+/* ── WHATSAPP — radar de ondas ── */
+.wa-float::before{
+  content:'';position:absolute;inset:-8px;border-radius:50%;
+  background:rgba(37,211,102,0.25);
+  animation:radar 2.2s 0.8s infinite;
+  pointer-events:none;
+}
+.wa-float::after{
+  content:'';position:absolute;inset:-16px;border-radius:50%;
+  background:rgba(37,211,102,0.12);
+  animation:radar 2.2s 1.3s infinite;
+  pointer-events:none;
+}
+@keyframes radar{
+  0%  {transform:scale(1);opacity:0.7}
+  100%{transform:scale(1.8);opacity:0}
+}
+
+/* ── PORTAFOLIO — hover 3D y glow ── */
+.port-item{
+  transition:transform 0.4s cubic-bezier(0.16,1,0.3,1),box-shadow 0.4s;
+  transform-style:preserve-3d;
+}
+.port-item:hover{
+  transform:translateY(-10px) scale(1.025) perspective(800px) rotateX(2deg);
+  box-shadow:0 24px 70px rgba(0,0,0,0.7),0 0 40px rgba(60,200,185,0.2),0 0 80px rgba(190,100,220,0.15);
+}
+.port-item::after{
+  content:'';position:absolute;inset:0;border-radius:10px;
+  background:linear-gradient(135deg,rgba(60,200,185,0.1),rgba(201,169,110,0.1),rgba(190,100,220,0.06) 70%,transparent);
+  opacity:0;transition:opacity 0.4s;pointer-events:none
+}
+.port-item:hover::after{opacity:1}
+
+/* ── PROCESO — entrada lateral + número glow ── */
+.process-step{transition:all 0.35s cubic-bezier(0.16,1,0.3,1)}
+.process-step:hover{padding-left:1.4rem;border-bottom-color:rgba(201,169,110,0.5)!important}
+.step-num{transition:color 0.3s,text-shadow 0.3s,transform 0.4s cubic-bezier(0.34,1.5,0.64,1)}
+.process-step:hover .step-num{
+  color:var(--gold);
+  text-shadow:0 0 30px rgba(240,185,60,0.9),0 0 70px rgba(60,200,185,0.5),0 0 120px rgba(190,100,220,0.25);
+  transform:scale(1.15) translateX(4px)
+}
+
+/* ── SECTION LABEL — línea crece ── */
+.section-label::before{animation:lineGrow 1s cubic-bezier(0.16,1,0.3,1) both}
+@keyframes lineGrow{from{width:0;opacity:0}to{width:30px;opacity:1}}
+
+/* ── CARDS WIZARD — cascada con blur ── */
+@keyframes cardIn{
+  from{opacity:0;transform:translateY(35px) scale(0.92);filter:blur(6px)}
+  to  {opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
+}
+.tipo-card{animation:cardIn 0.65s cubic-bezier(0.16,1,0.3,1) both}
+.tipo-card:nth-child(1){animation-delay:0.04s}
+.tipo-card:nth-child(2){animation-delay:0.1s}
+.tipo-card:nth-child(3){animation-delay:0.16s}
+.tipo-card:nth-child(4){animation-delay:0.22s}
+.tipo-card:nth-child(5){animation-delay:0.28s}
+.tipo-card:nth-child(6){animation-delay:0.34s}
+
+.pal-card{animation:cardIn 0.55s cubic-bezier(0.16,1,0.3,1) both}
+.pal-card:nth-child(1){animation-delay:0.03s}
+.pal-card:nth-child(2){animation-delay:0.07s}
+.pal-card:nth-child(3){animation-delay:0.11s}
+.pal-card:nth-child(4){animation-delay:0.15s}
+.pal-card:nth-child(5){animation-delay:0.19s}
+.pal-card:nth-child(6){animation-delay:0.23s}
+.pal-card:nth-child(7){animation-delay:0.27s}
+.pal-card:nth-child(8){animation-delay:0.31s}
+.pal-card:nth-child(9){animation-delay:0.35s}
+
+/* ── PERFORMANCE ── */
+.particles-wrap { will-change: auto; contain: strict; }
+.p { will-change: transform, opacity; }
+.hero-bg, .hero-grid { will-change: transform; }
+.port-item { will-change: transform; }
+.nav-logo img { will-change: transform, opacity; }
+
+/* Reducir animaciones si el usuario prefiere menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+.cursor-ring{transition:transform 0.12s,width 0.35s cubic-bezier(0.16,1,0.3,1),height 0.35s cubic-bezier(0.16,1,0.3,1),border-color 0.3s}
+.cursor-ring.expand{width:75px;height:75px;border-color:rgba(201,169,110,0.75)}
+
+/* ── FOOTER LINKS underline animado ── */
+.footer-links a{position:relative}
+.footer-links a::after{
+  content:'';position:absolute;bottom:-2px;left:0;
+  width:0;height:1px;background:var(--gold);
+  transition:width 0.35s cubic-bezier(0.16,1,0.3,1)
+}
+.footer-links a:hover::after{width:100%}
+
+/* ── TIPO CARD hover — elevación premium ── */
+.tipo-card{transition:transform 0.35s cubic-bezier(0.16,1,0.3,1),border-color 0.25s,box-shadow 0.35s}
+.tipo-card:hover{
+  transform:translateY(-6px) scale(1.02);
+  box-shadow:0 16px 40px rgba(0,0,0,0.5),0 0 20px rgba(201,169,110,0.12)
+}
+.tipo-card.sel{
+  box-shadow:0 0 0 2px var(--gold),0 8px 30px rgba(201,169,110,0.25);
+  transform:translateY(-4px)
+}
+
+/* ── PAL CARD hover ── */
+.pal-card{transition:transform 0.3s cubic-bezier(0.16,1,0.3,1),border-color 0.25s,box-shadow 0.3s}
+.pal-card:hover{transform:translateY(-5px) scale(1.03);box-shadow:0 12px 30px rgba(0,0,0,0.4)}
+.pal-card.sel{box-shadow:0 0 0 2px var(--gold),0 6px 24px rgba(201,169,110,0.2);transform:translateY(-3px)}
+
+/* ── EXTRA BTN hover ── */
+.extra-btn{transition:transform 0.25s cubic-bezier(0.16,1,0.3,1),border-color 0.2s,box-shadow 0.25s}
+.extra-btn:hover{transform:translateY(-4px) scale(1.04);box-shadow:0 8px 20px rgba(0,0,0,0.35)}
+.extra-btn.sel{box-shadow:0 0 0 1.5px var(--gold),0 4px 16px rgba(201,169,110,0.2)}
+
+/* ── WIZARD STEPS — indicador activo pulsa ── */
+.wstep.active .wstep-num{animation:stepPulse 2s ease-in-out infinite}
+@keyframes stepPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(201,169,110,0)}
+  50%    {box-shadow:0 0 0 6px rgba(201,169,110,0.25)}
+}
+
+/* ── BTN NEXT / SEND hover lift ── */
+.wbtn-next,.wbtn-back{transition:all 0.3s cubic-bezier(0.16,1,0.3,1)}
+.wbtn-next:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.wbtn-send:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(201,169,110,0.35)}
+
+/* ── CTA section — glow pulsante de fondo ── */
+.cta-bg{animation:ctaGlow 5s ease-in-out infinite alternate}
+@keyframes ctaGlow{
+  from{opacity:0.5;transform:scale(1)}
+  to  {opacity:1;transform:scale(1.1)}
+}
+
+/* ── PORTFOLIO TABS hover ── */
+.ptab{transition:all 0.25s cubic-bezier(0.16,1,0.3,1)}
+.ptab:hover{transform:translateY(-2px)}
+.ptab.active{box-shadow:0 4px 16px rgba(201,169,110,0.3)}
+
+/* ── RESUMEN — filas entran en cascada ── */
+@keyframes rowIn{
+  from{opacity:0;transform:translateX(-20px)}
+  to  {opacity:1;transform:translateX(0)}
+}
+.sum-row{animation:rowIn 0.4s cubic-bezier(0.16,1,0.3,1) both}
+.sum-row:nth-child(1){animation-delay:0.05s}
+.sum-row:nth-child(2){animation-delay:0.1s}
+.sum-row:nth-child(3){animation-delay:0.15s}
+.sum-row:nth-child(4){animation-delay:0.2s}
+.sum-row:nth-child(5){animation-delay:0.25s}
+.sum-row:nth-child(6){animation-delay:0.3s}
+.sum-row:nth-child(7){animation-delay:0.35s}
+.sum-row:nth-child(8){animation-delay:0.4s}
+.sum-row:nth-child(9){animation-delay:0.45s}
+
+/* ── SUCCESS check — pop animado ── */
+.success-icon{animation:checkPop 0.7s cubic-bezier(0.34,1.7,0.64,1) both}
+@keyframes checkPop{
+  from{transform:scale(0) rotate(-30deg);opacity:0}
+  to  {transform:scale(1) rotate(0deg);opacity:1}
+}
+
 </style>
 </head>
 <body>
+
+<!-- BARRA PROGRESO SCROLL -->
+<div class="scroll-progress-bar"></div>
+
+<!-- PARTÍCULAS CSS -->
+<div class="particles-wrap">
+  <div class="p"></div><div class="p"></div><div class="p"></div>
+  <div class="p"></div><div class="p"></div><div class="p"></div>
+  <div class="p"></div><div class="p"></div><div class="p"></div>
+  <div class="p"></div><div class="p"></div><div class="p"></div>
+  <div class="p"></div><div class="p"></div><div class="p"></div>
+  <div class="p"></div><div class="p"></div><div class="p"></div>
+  <div class="p"></div><div class="p"></div><div class="p"></div>
+  <div class="p"></div><div class="p"></div><div class="p"></div>
+</div>
 
 <!-- CURSOR -->
 <div class="cursor" id="cursor"></div>
